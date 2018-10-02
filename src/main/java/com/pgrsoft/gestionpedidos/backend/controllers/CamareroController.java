@@ -13,6 +13,8 @@ import com.pgrsoft.gestionpedidos.backend.presentation.CamareroPresentationServi
 @RestController
 public class CamareroController {
 
+	private org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CamareroController.class);
+	
 	@Autowired
 	private CamareroPresentationServices camareroPresentationServices;
 	
@@ -20,7 +22,9 @@ public class CamareroController {
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Camarero> dameString() {
+		
+		logger.error("/camareros");
+		
 		return camareroPresentationServices.getAll();
 	}
-	
 }

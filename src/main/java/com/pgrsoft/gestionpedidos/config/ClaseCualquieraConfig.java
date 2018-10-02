@@ -7,6 +7,7 @@ import com.pgrsoft.gestionpedidos.misbeans.BeanCualquiera;
 
 // Esta clase se instancia y se ejecutan todos sus métodos públicos
 
+
 @Configuration
 public class ClaseCualquieraConfig {
 

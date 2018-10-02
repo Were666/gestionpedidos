@@ -35,7 +35,6 @@ public class CamareroServicesImpl implements CamareroServices {
 	@Override
 	public List<Camarero> getAll() {
 		List<Camarero> camareros = camareroRepository.findAll();
-		System.out.println("camareros en camarerosServices de business: " + camareros);
 		return camareros;
 	}
 

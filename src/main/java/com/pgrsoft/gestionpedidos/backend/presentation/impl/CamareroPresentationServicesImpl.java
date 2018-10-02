@@ -26,7 +26,6 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	@Override
 	public List<Camarero> getAll() {
 		final List<Camarero> camareros = camareroServices.getAll();
-		System.out.println("camareros en presentationServices: " + camareros);
 		return camareros;
 	}
 
