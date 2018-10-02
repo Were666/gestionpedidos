@@ -3,15 +3,27 @@ package com.pgrsoft.gestionpedidos.backend.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="PRODUCTOS")
 public class Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long codigo;
+	
 	private String nombre;
 	private double precio;
 	private String descripcion;
 	private Date fechaAlta;
 	private boolean descatalogado;
+	
+	@Enumerated(EnumType.STRING)
 	private Categoria categoria;
 	
 	public Producto() {
