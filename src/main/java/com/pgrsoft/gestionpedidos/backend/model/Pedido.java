@@ -4,17 +4,28 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@Entity
+@Table(name="PEDIDOS")
 public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@Id
 	private Long id;
 	private Date fecha;
 	private int mesa;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_CAMARERO")
 	private Camarero camarero;
 	
-	//@Transient
+	@Transient
 	private List<LineaPedido> lineasPedido;
 	
 	public Pedido() {

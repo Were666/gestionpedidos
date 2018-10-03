@@ -2,12 +2,26 @@ package com.pgrsoft.gestionpedidos.backend.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="LINEAS_PEDIDO")
 public class LineaPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name="ID_PRODUCTO")
 	private Producto producto;
+	
 	private int cantidad;
+	
 	private double precio;
 	
 	public LineaPedido() {
