@@ -17,6 +17,8 @@ public class PedidoServicesImpl implements PedidoServices {
 	
 	@Override
 	public PedidoDTO getById(Long id) {
+		
+		// TODO mirar funcionamiento getOne vs findById
 		return pedidoRepository.getOne(id);
 	}
 
