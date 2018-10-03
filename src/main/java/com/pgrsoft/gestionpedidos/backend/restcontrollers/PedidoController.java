@@ -2,6 +2,8 @@ package com.pgrsoft.gestionpedidos.backend.restcontrollers;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,8 @@ import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentati
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoController {
+	
+	private Logger logger = LoggerFactory.getLogger(PedidoController.class);
 
 	@Autowired
 	private PedidoPresentationServices pedidoPresentationServices;
@@ -23,14 +27,34 @@ public class PedidoController {
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
 	public PedidoDTO getOne(@PathVariable ("id") Long id) {
-		return pedidoPresentationServices.getById(id);
+		
+		PedidoDTO pedido = null;
+		
+		try {
+			pedido = pedidoPresentationServices.getById(id);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			//TODO responder JSON de error y código HTTP adecuado!
+		}
+		
+		return pedido;
 	}
 	 
 	@RequestMapping(value="",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<PedidoDTO> getAll(){
-		return pedidoPresentationServices.getAll();
+		
+		List<PedidoDTO> pedidos = null;
+		
+		try {
+			pedidos = pedidoPresentationServices.getAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			//TODO responder JSON de error y código HTTP adecuado!
+		}
+		
+		return pedidos;
 	}
 	
 	

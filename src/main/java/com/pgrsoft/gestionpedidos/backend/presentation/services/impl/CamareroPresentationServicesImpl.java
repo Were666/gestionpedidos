@@ -18,20 +18,44 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	private CamareroServices camareroServices;
 	
 	@Override
-	public CamareroDTO getById(final Long id) {
-		final CamareroDTO camarero = camareroServices.getById(id);
+	public CamareroDTO getById(final Long id) throws Exception {
+			
+		CamareroDTO camarero = null;
+		
+		try {
+			camarero = camareroServices.getById(id);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
 		return camarero;
 	}
 
 	@Override
-	public List<CamareroDTO> getAll() {
-		final List<CamareroDTO> camareros = camareroServices.getAll();
+	public List<CamareroDTO> getAll() throws Exception {
+		
+		List<CamareroDTO> camareros = null;
+		
+		try {
+			camareros = camareroServices.getAll();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
 		return camareros;
 	}
 
 	@Override
-	public CamareroDTO create(final CamareroDTO camarero) {
-		final CamareroDTO createdCamarero = camareroServices.create(camarero);
+	public CamareroDTO create(final CamareroDTO camarero) throws Exception {
+		
+		CamareroDTO createdCamarero = null;
+		
+		try {
+			createdCamarero = camareroServices.create(camarero);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
 		return createdCamarero;
 	}
 

@@ -6,14 +6,10 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 
 public interface CamareroServices {
 
-	// Operaciones CRUD
+	public CamareroDTO getById(Long id) throws Exception;
 	
-	public CamareroDTO getById(Long id);
+	public CamareroDTO create(CamareroDTO camarero) throws Exception;
 	
-	public CamareroDTO create(CamareroDTO camarero);
-	
-	// Obtención de listas
-	
-	public List<CamareroDTO> getAll();
+	public List<CamareroDTO> getAll() throws Exception;
 	
 }

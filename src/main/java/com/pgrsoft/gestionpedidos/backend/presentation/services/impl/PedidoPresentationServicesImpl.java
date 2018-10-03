@@ -16,13 +16,31 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 	private PedidoServices pedidoServices;
 	
 	@Override
-	public PedidoDTO getById(Long id) {
-		return pedidoServices.getById(id);
+	public PedidoDTO getById(Long id) throws Exception {
+		
+		PedidoDTO pedido = null;
+		
+		try {
+			pedido = pedidoServices.getById(id);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return pedido;
 	}
 
 	@Override
-	public List<PedidoDTO> getAll() {
-		return pedidoServices.getAll();
+	public List<PedidoDTO> getAll() throws Exception {
+		
+		List<PedidoDTO> pedidos = null;
+		
+		try {
+			pedidos = pedidoServices.getAll();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return pedidos;
 	}
 
 }

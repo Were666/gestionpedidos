@@ -9,7 +9,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+//JsonIgnoreProperties en el modelo de presentation!!!!
+@JsonIgnoreProperties(value= {"hibernateLazyInitializer","handler"})
 @Table(name="PRODUCTOS")
 public class ProductoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;

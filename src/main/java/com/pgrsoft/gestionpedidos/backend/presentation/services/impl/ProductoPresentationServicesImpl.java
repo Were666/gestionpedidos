@@ -16,18 +16,45 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 	private ProductoServices productoServices;
 	
 	@Override
-	public List<ProductoDTO> getAll() {
-		return productoServices.getAll();
+	public List<ProductoDTO> getAll() throws Exception {
+		
+		List<ProductoDTO> productos =  null;
+		
+		try {
+			 productos = productoServices.getAll(); 
+		} catch (Exception e) {
+			throw new Exception (e.getMessage());
+		}
+		
+		return productos;
 	}
 
 	@Override
-	public ProductoDTO getById(Long id) {
-		return productoServices.getById(id);
+	public ProductoDTO getById(Long id) throws Exception{
+		
+		ProductoDTO producto = null;
+		
+		try {
+			producto = productoServices.getById(id);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return producto;
 	}
 
 	@Override
-	public ProductoDTO create(ProductoDTO producto) {
-		return productoServices.create(producto);
+	public ProductoDTO create(ProductoDTO producto) throws Exception {
+		
+		ProductoDTO createdProducto = null;
+		
+		try {
+			createdProducto = productoServices.create(producto);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+		
+		return createdProducto;
 	}
 
 }

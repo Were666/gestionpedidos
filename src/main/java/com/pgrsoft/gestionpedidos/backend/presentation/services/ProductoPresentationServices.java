@@ -6,10 +6,10 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 
 public interface ProductoPresentationServices {
 
-	public List<ProductoDTO> getAll();
+	public List<ProductoDTO> getAll() throws Exception;
 	
-	public ProductoDTO getById(Long id);
+	public ProductoDTO getById(Long id) throws Exception;
 	
-	public ProductoDTO create(ProductoDTO producto);
+	public ProductoDTO create(ProductoDTO producto) throws Exception;
+	
 }
-

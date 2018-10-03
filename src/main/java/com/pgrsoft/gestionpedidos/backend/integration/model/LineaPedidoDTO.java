@@ -12,7 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+//JsonIgnoreProperties en el modelo de presentation!!!!
+@JsonIgnoreProperties(value= {"hibernateLazyInitializer","handler"})
 @Table(name="LINEAS_PEDIDO")
 public class LineaPedidoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
