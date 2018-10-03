@@ -29,7 +29,7 @@ public class Pedido implements Serializable{
 	
 	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_PEDIDO")
-	@OrderBy(value="INDEX")		//TODAVIA NO SE HA COMPROBADO!!!!!
+	@OrderBy(value="INDICE")		//TODAVIA NO SE HA COMPROBADO!!!!!
 	private List<LineaPedido> lineasPedido;
 	
 	public Pedido() {
