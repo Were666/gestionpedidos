@@ -5,11 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="PEDIDOS")
@@ -25,7 +27,9 @@ public class Pedido implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private Camarero camarero;
 	
-	@Transient
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="ID_PEDIDO")
+	@OrderBy(value="INDEX")		//TODAVIA NO SE HA COMPROBADO!!!!!
 	private List<LineaPedido> lineasPedido;
 	
 	public Pedido() {
