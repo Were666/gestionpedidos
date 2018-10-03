@@ -16,10 +16,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-
 //JsonIgnoreProperties en el modelo de presentation!!!!
 @JsonIgnoreProperties(value= {"hibernateLazyInitializer","handler"})
-
 @Table(name="PEDIDOS")
 public class PedidoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
