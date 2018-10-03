@@ -13,7 +13,7 @@ public class ClaseCualquieraConfig {
 
 	@Bean
 	public BeanCualquiera xxxxxx() {
-		System.out.println("xxxxxxx");
+		//System.out.println("xxxxxxx");
 		return new BeanCualquiera("ff", 0.4);
 	}
 	

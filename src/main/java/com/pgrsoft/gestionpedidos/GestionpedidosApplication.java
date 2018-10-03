@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GestionpedidosApplication {
 
 	public static void main(String[] args) {
-		System.out.println("empieza la fiesta..");
 		SpringApplication.run(GestionpedidosApplication.class, args);
 	}
 }
