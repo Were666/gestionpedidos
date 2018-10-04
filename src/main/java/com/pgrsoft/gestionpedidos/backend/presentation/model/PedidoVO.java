@@ -60,7 +60,7 @@ public class PedidoVO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", fecha=" + fecha + ", mesa=" + mesa + ", camarero=" + camarero + ", lineasPedido="
+		return "PedidoVO [id=" + id + ", fecha=" + fecha + ", mesa=" + mesa + ", camarero=" + camarero + ", lineasPedido="
 				+ lineasPedido + "]";
 	}
 	

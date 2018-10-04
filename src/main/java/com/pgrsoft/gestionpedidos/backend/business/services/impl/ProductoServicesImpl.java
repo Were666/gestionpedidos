@@ -19,7 +19,7 @@ public class ProductoServicesImpl implements ProductoServices {
 	private ProductoRepository productoRepository;
 	
 	@Autowired
-	@Qualifier(value="genericConverter")
+	//@Qualifier(value="genericConverter")
 	private DozerBeanMapper dozerBeanMapper;
 	
 	@SuppressWarnings("unchecked")

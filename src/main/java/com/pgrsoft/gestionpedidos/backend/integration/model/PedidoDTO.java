@@ -78,7 +78,7 @@ public class PedidoDTO implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", fecha=" + fecha + ", mesa=" + mesa + ", camarero=" + camarero + ", lineasPedido="
+		return "PedidoDTO [id=" + id + ", fecha=" + fecha + ", mesa=" + mesa + ", camarero=" + camarero + ", lineasPedido="
 				+ lineasPedido + "]";
 	}
 	

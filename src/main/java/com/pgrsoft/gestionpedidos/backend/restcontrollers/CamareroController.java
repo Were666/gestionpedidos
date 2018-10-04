@@ -44,14 +44,13 @@ public class CamareroController {
 	@RequestMapping(value="/camareros",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	
 	public ResponseEntity<List<CamareroVO>> dameString() {
 
 		List<CamareroVO> camareros = null;
 		try {
 			camareros = camareroPresentationServices.getAll();
-			System.out.println(camareros);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 

@@ -1,10 +1,10 @@
 package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
@@ -12,14 +12,13 @@ import com.pgrsoft.gestionpedidos.backend.business.services.CamareroServices;
 import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 
-@Service // Necesario para poder inyectar esta clase en otro sitio
+@Service
 public class CamareroServicesImpl implements CamareroServices {
 
 	@Autowired
 	private CamareroRepository camareroRepository;
 	
 	@Autowired
-	@Qualifier(value="genericConverter")
 	private DozerBeanMapper dozerBeanMapper;
 	
 	@Override
@@ -38,11 +37,13 @@ public class CamareroServicesImpl implements CamareroServices {
 
 	@Override
 	public List<Camarero> getAll() {
+		
 		final List<CamareroDTO> camarerosDTO = camareroRepository.findAll();
 		
-		@SuppressWarnings("unchecked")
-		final List<Camarero> camareros = dozerBeanMapper.map(camarerosDTO, List.class);
-		
+		final List<Camarero> camareros = camarerosDTO.stream()
+			.map(x -> dozerBeanMapper.map(x,Camarero.class))
+			.collect(Collectors.toList());
+			
 		return camareros;
 	}
 

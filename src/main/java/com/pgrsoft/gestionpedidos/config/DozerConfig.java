@@ -10,19 +10,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DozerConfig {
 
+	
+	/*
 	@Bean(name = "genericConverter")
 	public DozerBeanMapper getMapper1() {
 		return new DozerBeanMapper();
 	}
+	*/
 	
-	
-	@Bean(name = "camareroConverter")
-    public DozerBeanMapper getMapper2() {
+	//@Bean(name = "camareroConverter")
+	@Bean
+    public DozerBeanMapper getMapper() {
         
 		List<String> mappingFiles = Arrays.asList("dozer-configration-mapping.xml");
 
         DozerBeanMapper dozerBean = new DozerBeanMapper();
+        
         dozerBean.setMappingFiles(mappingFiles);
+        
         return dozerBean;
     }
 	

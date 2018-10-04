@@ -35,7 +35,7 @@ public class CamareroVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Camarero [codigo=" + codigo + ", nombre=" + nombre + "]";
+		return "CamareroVO [codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
 	
 }

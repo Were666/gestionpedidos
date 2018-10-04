@@ -43,7 +43,7 @@ public class CamareroDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Camarero [id=" + id + ", nombre=" + nombre + "]";
+		return "CamareroDTO [id=" + id + ", nombre=" + nombre + "]";
 	}
 
 }

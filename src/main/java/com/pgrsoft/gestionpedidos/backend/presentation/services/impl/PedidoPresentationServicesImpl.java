@@ -19,7 +19,7 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 	private PedidoServices pedidoServices;
 	
 	@Autowired
-	@Qualifier(value="genericConverter")
+//	@Qualifier(value="genericConverter")
 	private DozerBeanMapper dozerBeanMapper;
 	
 	@Override

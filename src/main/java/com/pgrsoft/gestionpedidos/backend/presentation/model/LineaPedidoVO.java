@@ -48,7 +48,7 @@ public class LineaPedidoVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LineaPedido [id=" + id + ", producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio
+		return "LineaPedidoVO [id=" + id + ", producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio
 				+ "]";
 	}
 	
