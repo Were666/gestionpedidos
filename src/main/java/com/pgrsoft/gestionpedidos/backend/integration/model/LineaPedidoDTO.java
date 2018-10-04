@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -31,6 +32,7 @@ public class LineaPedidoDTO implements Serializable {
 	
 	private Long id;
 	
+	@ManyToOne
 	@JoinColumn(name="ID_PRODUCTO")
 	private ProductoDTO producto;
 	

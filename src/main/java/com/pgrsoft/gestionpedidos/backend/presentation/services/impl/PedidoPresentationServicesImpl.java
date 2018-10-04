@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
@@ -19,7 +18,6 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 	private PedidoServices pedidoServices;
 	
 	@Autowired
-//	@Qualifier(value="genericConverter")
 	private DozerBeanMapper dozerBeanMapper;
 	
 	@Override

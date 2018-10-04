@@ -27,7 +27,7 @@ public class PedidoDTO implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
 	
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_PEDIDO")
 	@OrderBy(value="INDICE")		//TODAVIA NO SE HA COMPROBADO!!!!!
 	private List<LineaPedidoDTO> lineasPedido;

@@ -1,12 +1,10 @@
 package com.pgrsoft.gestionpedidos.backend.presentation.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
@@ -19,8 +17,7 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 
 	@Autowired
 	private CamareroServices camareroServices;
-	
-//	@Qualifier(value="camareroConverter")
+
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
 	
@@ -41,25 +38,17 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 		return camareroVO;
 	}
 
-//	@SuppressWarnings("unchecked")
 	@Override
 	public List<CamareroVO> getAll() throws Exception {
 		
-		List<CamareroVO> camarerosVO = new ArrayList<CamareroVO>();
+		List<CamareroVO> camarerosVO;
 		
 		try {
 			final List<Camarero> camareros = camareroServices.getAll();
-			
-			System.out.println("camareros: " + camareros);
-					
-			for (Camarero camarero: camareros) {
-				System.out.println("camarero: " + camarero);
-				CamareroVO camareroVO = this.dozerBeanMapper.map(camarero,CamareroVO.class);
-				System.out.println(camareroVO);
-				camarerosVO.add(camareroVO);
-			}
-			
-			System.out.println("camarerosVO: " + camarerosVO);
+		
+			camarerosVO = camareros.stream()
+				.map(x -> dozerBeanMapper.map(x, CamareroVO.class))
+				.collect(Collectors.toList());
 			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
