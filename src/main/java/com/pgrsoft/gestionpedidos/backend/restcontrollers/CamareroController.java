@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
+import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
+
 import com.pgrsoft.gestionpedidos.backend.presentation.services.CamareroPresentationServices;
 
 @RestController
@@ -22,34 +24,32 @@ public class CamareroController {
 	
 	@Autowired
 	private CamareroPresentationServices camareroPresentationServices;
-/*	
-	@RequestMapping(value="/camareros",
+	
+	@RequestMapping(value="/camareros/{id}",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<CamareroDTO> dameString() {
+	public Camarero getById(@PathVariable("id") Long id) {
 	
-		List<CamareroDTO> camarerosDTO = null;
+		Camarero camarero = null;
 		try {
-			camarerosDTO = camareroPresentationServices.getAll();
+			camarero = camareroPresentationServices.getById(id);
 		} catch (Exception e) {
 			//e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 		
-		return camarerosDTO;
+		return camarero;
 	}
-*/	
+	
 	@RequestMapping(value="/camareros",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	
-	
-	
-	public ResponseEntity<List<CamareroDTO>> dameString() {
+	public ResponseEntity<List<Camarero>> dameString() {
 
-		List<CamareroDTO> camarerosDTO = null;
+		List<Camarero> camareros = null;
 		try {
-			camarerosDTO = camareroPresentationServices.getAll();
+			camareros = camareroPresentationServices.getAll();
 		} catch (Exception e) {
 			//e.printStackTrace();
 			logger.error(e.getMessage());
@@ -57,10 +57,7 @@ public class CamareroController {
 			
 		}
 
-		return new ResponseEntity<List<CamareroDTO>>(camarerosDTO, HttpStatus.OK);
+		return new ResponseEntity<List<Camarero>>(camareros, HttpStatus.OK);
 	}
-	
-	
-
 	
 }

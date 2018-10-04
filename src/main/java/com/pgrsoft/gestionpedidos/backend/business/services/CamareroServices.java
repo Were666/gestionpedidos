@@ -2,14 +2,14 @@ package com.pgrsoft.gestionpedidos.backend.business.services;
 
 import java.util.List;
 
-import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
+import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
 
 public interface CamareroServices {
 
-	public CamareroDTO getById(Long id) throws Exception;
+	public Camarero getById(Long id) throws Exception;
 	
-	public CamareroDTO create(CamareroDTO camarero) throws Exception;
+	public Camarero create(Camarero camarero) throws Exception;
 	
-	public List<CamareroDTO> getAll() throws Exception;
+	public List<Camarero> getAll() throws Exception;
 	
 }

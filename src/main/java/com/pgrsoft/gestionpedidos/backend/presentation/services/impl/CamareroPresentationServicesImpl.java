@@ -5,22 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
 import com.pgrsoft.gestionpedidos.backend.business.services.CamareroServices;
-import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.CamareroPresentationServices;
 
 @Service
 public class CamareroPresentationServicesImpl implements CamareroPresentationServices {
 
-	//Añadir logs...
-	
 	@Autowired
 	private CamareroServices camareroServices;
 	
 	@Override
-	public CamareroDTO getById(final Long id) throws Exception {
+	public Camarero getById(final Long id) throws Exception {
 			
-		CamareroDTO camarero = null;
+		Camarero camarero = null;
 		
 		try {
 			camarero = camareroServices.getById(id);
@@ -33,9 +31,9 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	}
 
 	@Override
-	public List<CamareroDTO> getAll() throws Exception {
+	public List<Camarero> getAll() throws Exception {
 		
-		List<CamareroDTO> camareros = null;
+		List<Camarero> camareros = null;
 		
 		try {
 			camareros = camareroServices.getAll();
@@ -47,9 +45,9 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	}
 
 	@Override
-	public CamareroDTO create(final CamareroDTO camarero) throws Exception {
+	public Camarero create(final Camarero camarero) throws Exception {
 		
-		CamareroDTO createdCamarero = null;
+		Camarero createdCamarero = null;
 		
 		try {
 			createdCamarero = camareroServices.create(camarero);
