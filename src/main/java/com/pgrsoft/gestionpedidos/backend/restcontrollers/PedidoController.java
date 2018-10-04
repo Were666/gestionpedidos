@@ -34,7 +34,7 @@ public class PedidoController {
 			pedido = pedidoPresentationServices.getById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			//TODO responder JSON de error y código HTTP adecuado!
+			//TODO
 		}
 		
 		return pedido;

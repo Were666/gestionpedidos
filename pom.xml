@@ -43,6 +43,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- AOP -->
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		
 		<!-- Dependencias para persistencia -->
 		
 		<dependency>
@@ -69,7 +76,6 @@
     		<artifactId>dozer</artifactId>
     		<version>5.5.1</version>
 		</dependency>
-		
 		
 	</dependencies>
 

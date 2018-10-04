@@ -2,8 +2,6 @@ package com.pgrsoft.gestionpedidos.backend.restcontrollers;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,14 +15,13 @@ import com.pgrsoft.gestionpedidos.backend.presentation.model.CamareroVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.CamareroPresentationServices;
 
 @RestController
+@RequestMapping("/camareros")
 public class CamareroController {
 
-	private Logger logger = LoggerFactory.getLogger(CamareroController.class);
-	
 	@Autowired
 	private CamareroPresentationServices camareroPresentationServices;
 	
-	@RequestMapping(value="/camareros/{id}",
+	@RequestMapping(value="/{id}",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
 	public CamareroVO getById(@PathVariable("id") Long id) {
@@ -34,14 +31,13 @@ public class CamareroController {
 		try {
 			camarero = camareroPresentationServices.getById(id);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
+			//TODO
 		}
 		
 		return camarero;
 	}
 	
-	@RequestMapping(value="/camareros",
+	@RequestMapping(value="",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CamareroVO>> dameString() {
@@ -50,8 +46,7 @@ public class CamareroController {
 		try {
 			camareros = camareroPresentationServices.getAll();
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error(e.getMessage());
+			//TODO
 		}
 
 		return new ResponseEntity<List<CamareroVO>>(camareros, HttpStatus.OK);

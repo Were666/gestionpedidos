@@ -30,8 +30,6 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 			final Camarero camarero = camareroServices.getById(id);
 			camareroVO = this.dozerBeanMapper.map(camarero, CamareroVO.class);
 		} catch (Exception e) {
-		//  logger.error("fdfd");
-			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
 		
