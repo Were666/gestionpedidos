@@ -25,6 +25,7 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 		try {
 			camarero = camareroServices.getById(id);
 		} catch (Exception e) {
+		//  logger.error("fdfd");	
 			throw new Exception(e.getMessage());
 		}
 		

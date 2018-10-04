@@ -1,6 +1,7 @@
 package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,18 @@ public class PedidoServicesImpl implements PedidoServices {
 	public PedidoDTO getById(Long id) {
 		
 		// TODO mirar funcionamiento getOne vs findById
-		return pedidoRepository.getOne(id);
+		
+		Optional<PedidoDTO> optional = pedidoRepository.findById(id);
+		
+		PedidoDTO pedido = null;
+		
+		if (optional.isPresent()) {
+			pedido = optional.get();
+		}
+		
+		System.out.println("Pedido fuera de la caja Optional: " + pedido);
+		
+		return pedido;
 	}
 
 	@Override

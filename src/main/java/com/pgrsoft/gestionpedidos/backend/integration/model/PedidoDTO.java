@@ -13,11 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
-//JsonIgnoreProperties en el modelo de presentation!!!!
-@JsonIgnoreProperties(value= {"hibernateLazyInitializer","handler"})
 @Table(name="PEDIDOS")
 public class PedidoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -31,7 +27,7 @@ public class PedidoDTO implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany
 	@JoinColumn(name="ID_PEDIDO")
 	@OrderBy(value="INDICE")		//TODAVIA NO SE HA COMPROBADO!!!!!
 	private List<LineaPedidoDTO> lineasPedido;

@@ -13,5 +13,4 @@ public interface PedidoServices {
 	//Coming soon
 	
 	// listados paginados, create, filtros, orden, etc...
-	
 }
