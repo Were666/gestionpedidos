@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
-import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
 
 @Service

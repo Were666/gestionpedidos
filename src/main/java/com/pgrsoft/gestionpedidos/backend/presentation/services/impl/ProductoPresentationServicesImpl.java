@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.ProductoServices;
-import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
 
 @Service
@@ -16,9 +16,9 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 	private ProductoServices productoServices;
 	
 	@Override
-	public List<ProductoDTO> getAll() throws Exception {
+	public List<Producto> getAll() throws Exception {
 		
-		List<ProductoDTO> productos =  null;
+		List<Producto> productos =  null;
 		
 		try {
 			 productos = productoServices.getAll(); 
@@ -30,9 +30,9 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 	}
 
 	@Override
-	public ProductoDTO getById(Long id) throws Exception{
+	public Producto getById(Long id) throws Exception{
 		
-		ProductoDTO producto = null;
+		Producto producto = null;
 		
 		try {
 			producto = productoServices.getById(id);
@@ -44,9 +44,9 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 	}
 
 	@Override
-	public ProductoDTO create(ProductoDTO producto) throws Exception {
+	public Producto create(Producto producto) throws Exception {
 		
-		ProductoDTO createdProducto = null;
+		Producto createdProducto = null;
 		
 		try {
 			createdProducto = productoServices.create(producto);
