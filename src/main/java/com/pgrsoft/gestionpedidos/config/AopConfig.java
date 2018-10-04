@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Aspect
-public class ControllersAccessAspectConfig {
+public class AopConfig {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
