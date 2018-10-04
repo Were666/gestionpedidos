@@ -12,6 +12,7 @@ public class ProductoVO implements Serializable {
 	private String descripcion;
 	private Date fechaAlta;
 	private boolean descatalogado;
+	
 	private CategoriaVO categoria;
 	
 	public ProductoVO() {
