@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
@@ -17,6 +18,7 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	@Autowired
 	private CamareroServices camareroServices;
 	
+	@Qualifier(value="camareroConverter")
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
 	
@@ -29,7 +31,8 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 			final Camarero camarero = camareroServices.getById(id);
 			camareroVO = this.dozerBeanMapper.map(camarero, CamareroVO.class);
 		} catch (Exception e) {
-		//  logger.error("fdfd");	
+		//  logger.error("fdfd");
+			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
 		

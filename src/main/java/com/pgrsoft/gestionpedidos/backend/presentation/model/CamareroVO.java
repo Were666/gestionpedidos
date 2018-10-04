@@ -5,24 +5,24 @@ import java.io.Serializable;
 public class CamareroVO implements Serializable {
 	private static final long serialVersionUID = -89385743L;
 	
-	private Long id;
+	private Long codigo;
 	private String nombre;
 	
 	public CamareroVO() {
 		
 	}
 	
-	public CamareroVO(Long id, String nombre) {
-		this.id = id;
+	public CamareroVO(Long codigo, String nombre) {
+		this.codigo = codigo;
 		this.nombre = nombre;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getCodigo() {
+		return codigo;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNombre() {
@@ -35,7 +35,7 @@ public class CamareroVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Camarero [id=" + id + ", nombre=" + nombre + "]";
+		return "Camarero [codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
 	
 }

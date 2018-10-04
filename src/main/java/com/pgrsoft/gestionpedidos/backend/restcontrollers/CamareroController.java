@@ -30,10 +30,11 @@ public class CamareroController {
 	public CamareroVO getById(@PathVariable("id") Long id) {
 	
 		CamareroVO camarero = null;
+		
 		try {
 			camarero = camareroPresentationServices.getById(id);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			logger.error(e.getMessage());
 		}
 		
@@ -49,11 +50,9 @@ public class CamareroController {
 		List<CamareroVO> camareros = null;
 		try {
 			camareros = camareroPresentationServices.getAll();
+			System.out.println(camareros);
 		} catch (Exception e) {
-			//e.printStackTrace();
 			logger.error(e.getMessage());
-			//return new ResponseEntity<List<CamareroDTO>>(HttpStatus.BAD_REQUEST);
-			
 		}
 
 		return new ResponseEntity<List<CamareroVO>>(camareros, HttpStatus.OK);
