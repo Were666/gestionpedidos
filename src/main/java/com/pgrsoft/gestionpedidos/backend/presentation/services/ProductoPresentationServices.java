@@ -2,14 +2,14 @@ package com.pgrsoft.gestionpedidos.backend.presentation.services;
 
 import java.util.List;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 
 public interface ProductoPresentationServices {
 
-	public List<Producto> getAll() throws Exception;
+	public List<ProductoVO> getAll() throws Exception;
 	
-	public Producto getById(Long id) throws Exception;
+	public ProductoVO getById(Long id) throws Exception;
 	
-	public Producto create(Producto producto) throws Exception;
+	public ProductoVO create(ProductoVO producto) throws Exception;
 	
 }

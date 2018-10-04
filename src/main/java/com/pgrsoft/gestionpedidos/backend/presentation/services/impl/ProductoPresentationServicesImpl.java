@@ -2,11 +2,13 @@ package com.pgrsoft.gestionpedidos.backend.presentation.services.impl;
 
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.ProductoServices;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
 
 @Service
@@ -15,46 +17,54 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 	@Autowired
 	private ProductoServices productoServices;
 	
+	@Autowired
+	private DozerBeanMapper dozerBeanMapper;
+	
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Producto> getAll() throws Exception {
+	public List<ProductoVO> getAll() throws Exception {
 		
-		List<Producto> productos =  null;
+		List<ProductoVO> productosVO =  null;
 		
 		try {
-			 productos = productoServices.getAll(); 
+			final List<Producto> productos = productoServices.getAll(); 
+			productosVO = dozerBeanMapper.map(productos, List.class);
 		} catch (Exception e) {
 			throw new Exception (e.getMessage());
 		}
 		
-		return productos;
+		return productosVO;
 	}
 
 	@Override
-	public Producto getById(Long id) throws Exception{
+	public ProductoVO getById(Long id) throws Exception{
 		
-		Producto producto = null;
+		ProductoVO productoVO = null;
 		
 		try {
-			producto = productoServices.getById(id);
+			final Producto producto = productoServices.getById(id);
+			productoVO = dozerBeanMapper.map(producto, ProductoVO.class);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return producto;
+		return productoVO;
 	}
 
 	@Override
-	public Producto create(Producto producto) throws Exception {
+	public ProductoVO create(ProductoVO newProductoVO) throws Exception {
 		
-		Producto createdProducto = null;
+		ProductoVO createdProductoVO = null;
 		
 		try {
-			createdProducto = productoServices.create(producto);
+			final Producto newProducto = dozerBeanMapper.map(newProductoVO, Producto.class);
+			final Producto createdProducto = productoServices.create(newProducto);
+			createdProductoVO = dozerBeanMapper.map(createdProducto, ProductoVO.class);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return createdProducto;
+		return createdProductoVO;
 	}
 
 }

@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
-
+import com.pgrsoft.gestionpedidos.backend.presentation.model.CamareroVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.CamareroPresentationServices;
 
 @RestController
@@ -28,9 +27,9 @@ public class CamareroController {
 	@RequestMapping(value="/camareros/{id}",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
-	public Camarero getById(@PathVariable("id") Long id) {
+	public CamareroVO getById(@PathVariable("id") Long id) {
 	
-		Camarero camarero = null;
+		CamareroVO camarero = null;
 		try {
 			camarero = camareroPresentationServices.getById(id);
 		} catch (Exception e) {
@@ -45,9 +44,9 @@ public class CamareroController {
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	
-	public ResponseEntity<List<Camarero>> dameString() {
+	public ResponseEntity<List<CamareroVO>> dameString() {
 
-		List<Camarero> camareros = null;
+		List<CamareroVO> camareros = null;
 		try {
 			camareros = camareroPresentationServices.getAll();
 		} catch (Exception e) {
@@ -57,7 +56,7 @@ public class CamareroController {
 			
 		}
 
-		return new ResponseEntity<List<Camarero>>(camareros, HttpStatus.OK);
+		return new ResponseEntity<List<CamareroVO>>(camareros, HttpStatus.OK);
 	}
 	
 }

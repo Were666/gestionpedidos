@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
 
 @RestController
@@ -26,9 +26,9 @@ public class PedidoController {
 	@RequestMapping(value="/{id}",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
-	public Pedido getOne(@PathVariable ("id") Long id) {
+	public PedidoVO getOne(@PathVariable ("id") Long id) {
 		
-		Pedido pedido = null;
+		PedidoVO pedido = null;
 		
 		try {
 			pedido = pedidoPresentationServices.getById(id);
@@ -43,9 +43,9 @@ public class PedidoController {
 	@RequestMapping(value="",
 					method=RequestMethod.GET,
 					produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Pedido> getAll(){
+	public List<PedidoVO> getAll(){
 		
-		List<Pedido> pedidos = null;
+		List<PedidoVO> pedidos = null;
 		
 		try {
 			pedidos = pedidoPresentationServices.getAll();

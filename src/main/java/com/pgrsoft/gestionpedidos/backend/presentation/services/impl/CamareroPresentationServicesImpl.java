@@ -2,11 +2,13 @@ package com.pgrsoft.gestionpedidos.backend.presentation.services.impl;
 
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
 import com.pgrsoft.gestionpedidos.backend.business.services.CamareroServices;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.CamareroVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.CamareroPresentationServices;
 
 @Service
@@ -15,47 +17,56 @@ public class CamareroPresentationServicesImpl implements CamareroPresentationSer
 	@Autowired
 	private CamareroServices camareroServices;
 	
+	@Autowired
+	private DozerBeanMapper dozerBeanMapper;
+	
 	@Override
-	public Camarero getById(final Long id) throws Exception {
+	public CamareroVO getById(final Long id) throws Exception {
 			
-		Camarero camarero = null;
+		CamareroVO camareroVO = null;
 		
 		try {
-			camarero = camareroServices.getById(id);
+			final Camarero camarero = camareroServices.getById(id);
+			camareroVO = this.dozerBeanMapper.map(camarero, CamareroVO.class);
 		} catch (Exception e) {
 		//  logger.error("fdfd");	
 			throw new Exception(e.getMessage());
 		}
 		
-		return camarero;
+		return camareroVO;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Camarero> getAll() throws Exception {
+	public List<CamareroVO> getAll() throws Exception {
 		
-		List<Camarero> camareros = null;
+		List<CamareroVO> camarerosVO = null;
 		
 		try {
-			camareros = camareroServices.getAll();
+			final List<Camarero> camareros = camareroServices.getAll();
+			camarerosVO = dozerBeanMapper.map(camareros,List.class); 
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return camareros;
+		return camarerosVO;
 	}
 
 	@Override
-	public Camarero create(final Camarero camarero) throws Exception {
+	public CamareroVO create(final CamareroVO newCamareroVO) throws Exception {
 		
-		Camarero createdCamarero = null;
+		CamareroVO camareroVO = null;
 		
 		try {
-			createdCamarero = camareroServices.create(camarero);
+			final Camarero newCamarero = dozerBeanMapper.map(newCamareroVO, Camarero.class);
+			final Camarero createdCamarero = camareroServices.create(newCamarero);
+			camareroVO = dozerBeanMapper.map(createdCamarero, CamareroVO.class);
+			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return createdCamarero;
+		return camareroVO;
 	}
 
 }

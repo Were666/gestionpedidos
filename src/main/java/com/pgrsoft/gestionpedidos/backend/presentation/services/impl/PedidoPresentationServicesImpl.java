@@ -2,11 +2,13 @@ package com.pgrsoft.gestionpedidos.backend.presentation.services.impl;
 
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
 
 @Service
@@ -15,34 +17,38 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 	@Autowired
 	private PedidoServices pedidoServices;
 	
+	@Autowired
+	private DozerBeanMapper dozerBeanMapper;
+	
 	@Override
-	public Pedido getById(Long id) throws Exception {
+	public PedidoVO getById(Long id) throws Exception {
 		
-		Pedido pedido = null;
+		PedidoVO pedidoVO = null;
 		
 		try {
-			pedido = pedidoServices.getById(id);
+			final Pedido pedido = pedidoServices.getById(id);
+			pedidoVO = dozerBeanMapper.map(pedido, PedidoVO.class);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		
-		
-		return pedido;
+		return pedidoVO;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<Pedido> getAll() throws Exception {
+	public List<PedidoVO> getAll() throws Exception {
 		
-		List<Pedido> pedidos = null;
+		List<PedidoVO> pedidosVO = null;
 		
 		try {
-			pedidos = pedidoServices.getAll();
+			final List<Pedido> pedidos = pedidoServices.getAll();
+			pedidosVO = dozerBeanMapper.map(pedidos, List.class);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
-		return pedidos;
+		return pedidosVO;
 	}
 
 }

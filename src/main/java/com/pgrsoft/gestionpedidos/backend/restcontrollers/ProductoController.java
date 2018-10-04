@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
 
 @RestController
@@ -23,9 +23,9 @@ public class ProductoController {
 	private ProductoPresentationServices productoPresentationServices;
 	
 	@GetMapping(value="")
-	public List<Producto> getAll(){
+	public List<ProductoVO> getAll(){
 		
-		List<Producto> productos = null;
+		List<ProductoVO> productos = null;
 		
 		try {
 			productos = productoPresentationServices.getAll();
@@ -38,9 +38,9 @@ public class ProductoController {
 	}
 	
 	@GetMapping(value="/{codigo}")
-	public Producto getById(@PathVariable ("codigo") Long codigo) {
+	public ProductoVO getById(@PathVariable ("codigo") Long codigo) {
 		
-		Producto producto = null;
+		ProductoVO producto = null;
 		
 		try {
 			producto = productoPresentationServices.getById(codigo);
