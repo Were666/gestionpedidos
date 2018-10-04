@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
 import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
@@ -16,9 +17,9 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 	private PedidoServices pedidoServices;
 	
 	@Override
-	public PedidoDTO getById(Long id) throws Exception {
+	public Pedido getById(Long id) throws Exception {
 		
-		PedidoDTO pedido = null;
+		Pedido pedido = null;
 		
 		try {
 			pedido = pedidoServices.getById(id);
@@ -26,13 +27,15 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 			throw new Exception(e.getMessage());
 		}
 		
+		
+		
 		return pedido;
 	}
 
 	@Override
-	public List<PedidoDTO> getAll() throws Exception {
+	public List<Pedido> getAll() throws Exception {
 		
-		List<PedidoDTO> pedidos = null;
+		List<Pedido> pedidos = null;
 		
 		try {
 			pedidos = pedidoServices.getAll();

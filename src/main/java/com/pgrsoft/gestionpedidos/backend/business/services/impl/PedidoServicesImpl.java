@@ -3,11 +3,14 @@ package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
+import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
+import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
+
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
 
 @Service
@@ -16,27 +19,33 @@ public class PedidoServicesImpl implements PedidoServices {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
+	@Autowired
+	private DozerBeanMapper dozerBeanMapper;
+	
 	@Override
-	public PedidoDTO getById(Long id) {
-		
-		// TODO mirar funcionamiento getOne vs findById
+	public Pedido getById(Long id) {
 		
 		Optional<PedidoDTO> optional = pedidoRepository.findById(id);
 		
-		PedidoDTO pedido = null;
+		PedidoDTO pedidoDTO = null;
 		
 		if (optional.isPresent()) {
-			pedido = optional.get();
+			pedidoDTO = optional.get();
 		}
 		
-		System.out.println("Pedido fuera de la caja Optional: " + pedido);
+		final Pedido pedido = dozerBeanMapper.map(pedidoDTO, Pedido.class);
 		
 		return pedido;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<PedidoDTO> getAll() {
-		return pedidoRepository.findAll();
+	public List<Pedido> getAll() {
+		
+		final List<PedidoDTO> pedidosDTO = pedidoRepository.findAll();
+		final List<Pedido> pedidos = dozerBeanMapper.map(pedidosDTO, List.class);
+		
+		return pedidos;
 	}
 
 }

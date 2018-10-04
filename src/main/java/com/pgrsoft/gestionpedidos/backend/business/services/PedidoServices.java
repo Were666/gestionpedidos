@@ -2,15 +2,12 @@ package com.pgrsoft.gestionpedidos.backend.business.services;
 
 import java.util.List;
 
-import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
+import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 
 public interface PedidoServices {
 
-	public PedidoDTO getById(Long id) throws Exception;
+	public Pedido getById(Long id) throws Exception;
 	
-	public List<PedidoDTO> getAll() throws Exception;
+	public List<Pedido> getAll() throws Exception;
 	
-	//Coming soon
-	
-	// listados paginados, create, filtros, orden, etc...
 }
