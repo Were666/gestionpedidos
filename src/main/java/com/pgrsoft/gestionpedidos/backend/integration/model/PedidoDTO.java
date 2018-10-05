@@ -31,8 +31,7 @@ public class PedidoDTO implements Serializable{
 					valueColumnName = "SEQ_NUMBER",
 					allocationSize = 10)
 
-    @GeneratedValue(strategy=GenerationType.TABLE, 
-					generator = "PEDIDO_GENERATOR")
+    @GeneratedValue(strategy=GenerationType.TABLE, generator = "PEDIDO_GENERATOR")
 	
 	private Long id;
 	
@@ -43,11 +42,9 @@ public class PedidoDTO implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
 	
-	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="ID_PEDIDO")
-	@OrderBy(value="INDICE")
 
-	//@Transient
+	@OneToMany(mappedBy = "pedido", cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.PERSIST})
+	@OrderBy(value="INDICE")
 	private List<LineaPedidoDTO> lineasPedido;
 	
 	public PedidoDTO() {

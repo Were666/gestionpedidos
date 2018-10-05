@@ -2,6 +2,7 @@ package com.pgrsoft.gestionpedidos.backend.integration.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,6 +36,10 @@ public class LineaPedidoDTO implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_PRODUCTO")
 	private ProductoDTO producto;
+	
+	@ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.PERSIST})
+	//@JoinColumn(name="ID_PEDIDO")
+	private PedidoDTO pedido;
 	
 	private int cantidad;
 	
@@ -75,11 +80,19 @@ public class LineaPedidoDTO implements Serializable {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+	
+	public PedidoDTO getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(PedidoDTO pedido) {
+		this.pedido = pedido;
+	}
 
 	@Override
 	public String toString() {
 		return "LineaPedidoDTO [id=" + id + ", producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio
 				+ "]";
 	}
-	
+
 }
