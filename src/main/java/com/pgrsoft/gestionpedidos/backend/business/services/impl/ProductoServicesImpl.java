@@ -1,6 +1,7 @@
 package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,15 @@ public class ProductoServicesImpl implements ProductoServices {
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Producto> getAll() {
+		
 		final List<ProductoDTO> productosDTO = productoRepository.findAll();
-		final List<Producto> productos = dozerBeanMapper.map(productosDTO, List.class);
+		
+		final List<Producto> productos = productosDTO.stream()
+				.map(x -> this.dozerBeanMapper.map(x, Producto.class))
+				.collect(Collectors.toList());
+		
 		return productos;
 	}
 

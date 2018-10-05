@@ -10,15 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DozerConfig {
 
-	
-	/*
-	@Bean(name = "genericConverter")
-	public DozerBeanMapper getMapper1() {
-		return new DozerBeanMapper();
-	}
-	*/
-	
-	//@Bean(name = "camareroConverter")
 	@Bean
     public DozerBeanMapper getMapper() {
         
@@ -30,23 +21,5 @@ public class DozerConfig {
         
         return dozerBean;
     }
-	
-	
-	
-	
-/*			
-	@Bean
-	public BeanMappingBuilder getBeanMappingBuilder() {
-		return new BeanMappingBuilder() {
-			
-		    @Override
-		    protected void configure() {
-		        mapping(CamareroDTO.class, Camarero.class);
-		        //  .fields("name", "nom")
-		        //  .fields("nickname", "surnom");
-		    }
-		};
-	}
-	
-	*/
+
 }

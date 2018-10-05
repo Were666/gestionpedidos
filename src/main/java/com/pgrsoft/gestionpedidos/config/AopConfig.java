@@ -15,19 +15,22 @@ public class AopConfig {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Before("execution(* com.pgrsoft.gestionpedidos.backend.restcontrollers.*.*(..))")
-	public void before(JoinPoint joinPoint){
+	public void beforeEndpointsExecution(JoinPoint joinPoint){
+		
 		//Advice
 	
 		String clase = joinPoint.getSourceLocation().getWithinType().getSimpleName();
 		String metodo = joinPoint.getSignature().getName();
+		
 		
 		logger.info("acceso a " + clase + "/" + metodo);
 	}
 	
 	
 	@AfterThrowing(pointcut = "execution(* com.pgrsoft.gestionpedidos.backend.presentation.services.impl.*.*(..))", throwing = "ex")
-    public void logError1(Exception ex) {
-        ex.printStackTrace();
+    public void bussinesLayerException(Exception ex) {
+		System.out.println("***************************************************************");
+        //ex.printStackTrace();
     }
 	
 	@AfterThrowing(pointcut = "execution(* com.pgrsoft.gestionpedidos.backend.restcontrollers.*.*(..))", throwing = "ex")

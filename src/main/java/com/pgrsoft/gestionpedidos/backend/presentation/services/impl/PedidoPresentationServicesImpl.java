@@ -1,6 +1,7 @@
 package com.pgrsoft.gestionpedidos.backend.presentation.services.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,6 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 		return pedidoVO;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<PedidoVO> getAll() throws Exception {
 		
@@ -43,7 +43,11 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 		
 		try {
 			final List<Pedido> pedidos = pedidoServices.getAll();
-			pedidosVO = dozerBeanMapper.map(pedidos, List.class);
+			
+			pedidosVO = pedidos.stream()
+					.map(x -> this.dozerBeanMapper.map(x, PedidoVO.class))
+					.collect(Collectors.toList());
+			
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
