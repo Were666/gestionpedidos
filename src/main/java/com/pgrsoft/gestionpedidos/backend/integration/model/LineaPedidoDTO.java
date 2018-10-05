@@ -24,7 +24,7 @@ public class LineaPedidoDTO implements Serializable {
 					pkColumnName = "SEQ_NAME",
 					pkColumnValue = "LINEAS_PEDIDO_SEQ",
 					valueColumnName = "SEQ_NUMBER",
-					allocationSize = 1)
+					allocationSize = 1000)
 
     @GeneratedValue(strategy=GenerationType.TABLE, 
 					generator = "LINEAS_PEDIDO_GENERATOR")

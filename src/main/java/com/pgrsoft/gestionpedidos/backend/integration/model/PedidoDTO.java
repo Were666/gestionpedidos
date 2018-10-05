@@ -4,14 +4,19 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="PEDIDOS")
@@ -19,7 +24,18 @@ public class PedidoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
+    @TableGenerator(name = "PEDIDO_GENERATOR",
+					table = "SECUENCIAS",
+					pkColumnName = "SEQ_NAME",
+					pkColumnValue = "PEDIDO_SEQ",
+					valueColumnName = "SEQ_NUMBER",
+					allocationSize = 10)
+
+    @GeneratedValue(strategy=GenerationType.TABLE, 
+					generator = "PEDIDO_GENERATOR")
+	
 	private Long id;
+	
 	private Date fecha;
 	private int mesa;
 	
@@ -27,9 +43,11 @@ public class PedidoDTO implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
 	
-	@OneToMany(fetch=FetchType.EAGER)
+	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="ID_PEDIDO")
-	@OrderBy(value="INDICE")		//TODAVIA NO SE HA COMPROBADO!!!!!
+	@OrderBy(value="INDICE")
+
+	//@Transient
 	private List<LineaPedidoDTO> lineasPedido;
 	
 	public PedidoDTO() {

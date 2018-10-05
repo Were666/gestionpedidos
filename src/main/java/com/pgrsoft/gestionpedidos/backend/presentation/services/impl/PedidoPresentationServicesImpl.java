@@ -55,4 +55,14 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 		return pedidosVO;
 	}
 
+	@Override
+	public PedidoVO create(PedidoVO pedidoVO) throws Exception {
+	
+		final Pedido newPedido = this.dozerBeanMapper.map(pedidoVO, Pedido.class);
+		final Pedido createdPedido = this.pedidoServices.create(newPedido);
+		final PedidoVO createdPedidoVO = this.dozerBeanMapper.map(createdPedido, PedidoVO.class);
+		
+		return createdPedidoVO;
+	}
+
 }

@@ -10,4 +10,6 @@ public interface PedidoPresentationServices {
 	
 	public List<PedidoVO> getAll() throws Exception;
 	
+	public PedidoVO create(PedidoVO pedidoVO) throws Exception;
+	
 }
