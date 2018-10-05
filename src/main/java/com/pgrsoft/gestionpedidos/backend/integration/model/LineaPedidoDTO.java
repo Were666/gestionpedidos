@@ -2,8 +2,8 @@ package com.pgrsoft.gestionpedidos.backend.integration.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,20 +25,17 @@ public class LineaPedidoDTO implements Serializable {
 					pkColumnName = "SEQ_NAME",
 					pkColumnValue = "LINEAS_PEDIDO_SEQ",
 					valueColumnName = "SEQ_NUMBER",
-					allocationSize = 1000)
+					allocationSize = 10)
 
-    @GeneratedValue(strategy=GenerationType.TABLE, 
-					generator = "LINEAS_PEDIDO_GENERATOR")
-	
-	
+    @GeneratedValue(strategy=GenerationType.TABLE, generator = "LINEAS_PEDIDO_GENERATOR")
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_PRODUCTO")
 	private ProductoDTO producto;
 	
-	@ManyToOne(cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.PERSIST})
-	//@JoinColumn(name="ID_PEDIDO")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="ID_PEDIDO")
 	private PedidoDTO pedido;
 	
 	private int cantidad;
@@ -87,6 +84,31 @@ public class LineaPedidoDTO implements Serializable {
 
 	public void setPedido(PedidoDTO pedido) {
 		this.pedido = pedido;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LineaPedidoDTO other = (LineaPedidoDTO) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 	@Override

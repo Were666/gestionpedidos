@@ -1,6 +1,7 @@
 package com.pgrsoft.gestionpedidos.backend.integration.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="PEDIDOS")
@@ -32,7 +32,8 @@ public class PedidoDTO implements Serializable{
 					allocationSize = 10)
 
     @GeneratedValue(strategy=GenerationType.TABLE, generator = "PEDIDO_GENERATOR")
-	
+
+
 	private Long id;
 	
 	private Date fecha;
@@ -42,10 +43,10 @@ public class PedidoDTO implements Serializable{
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
 	
-
-	@OneToMany(mappedBy = "pedido", cascade = {CascadeType.ALL, CascadeType.MERGE, CascadeType.PERSIST})
+	
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy(value="INDICE")
-	private List<LineaPedidoDTO> lineasPedido;
+	private List<LineaPedidoDTO> lineasPedido = new ArrayList<LineaPedidoDTO>();
 	
 	public PedidoDTO() {
 		
@@ -90,6 +91,17 @@ public class PedidoDTO implements Serializable{
 	public void setLineasPedido(List<LineaPedidoDTO> lineasPedido) {
 		this.lineasPedido = lineasPedido;
 	}
+	
+	public void addLineaPedido(LineaPedidoDTO lineaPedido) {
+		lineasPedido.add(lineaPedido);
+		lineaPedido.setPedido(this);
+	}
+	
+	public void removeLineaPedido(LineaPedidoDTO lineaPedido) {
+		lineasPedido.remove(lineaPedido);
+		lineaPedido.setProducto(null);
+	}
+	
 
 	@Override
 	public String toString() {

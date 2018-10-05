@@ -1,7 +1,5 @@
 package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,13 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
-import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
+import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
 import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
-import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
-import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
-import com.pgrsoft.gestionpedidos.backend.integration.repositories.LineaPedidoRepository;
+import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
+import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
 
 @Service
 public class PedidoServicesImpl implements PedidoServices {
@@ -28,8 +25,11 @@ public class PedidoServicesImpl implements PedidoServices {
 	private PedidoRepository pedidoRepository;
 	
 	@Autowired
-	private LineaPedidoRepository lineaPedidoRepository;
+	private CamareroRepository camareroRepository;
 	
+	@Autowired
+	private ProductoRepository productoRepository;
+		
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
 	
@@ -69,57 +69,21 @@ public class PedidoServicesImpl implements PedidoServices {
 		
 		final PedidoDTO newPedidoDTO = dozerBeanMapper.map(pedido, PedidoDTO.class);
 		
-		//System.out.println("newPedidoDTO: " + newPedidoDTO);
+		final PedidoDTO pedidoDTO = new PedidoDTO();
 		
-		
-		PedidoDTO engañador = new PedidoDTO();
-		engañador.setId(Long.valueOf((long)(Math.random() * 100000)));
-		engañador.setMesa(666);
-		engañador.setFecha(new Date());
-		CamareroDTO camareroDTO = new CamareroDTO();
-		camareroDTO.setId(102L);
-		engañador.setCamarero(camareroDTO);
-		
-		PedidoDTO createdPedidoDTO = pedidoRepository.save(engañador);
-		
-		System.out.println("HABEMUS CODIGO: " + createdPedidoDTO.getId());
-		
-		List<LineaPedidoDTO> lineasEngañadoras = new ArrayList<LineaPedidoDTO>();
-		
-		LineaPedidoDTO l1 = new LineaPedidoDTO();
-		LineaPedidoDTO l2 = new LineaPedidoDTO();
-		
-		ProductoDTO p1 = new ProductoDTO();
-		ProductoDTO p2 = new ProductoDTO();
-		
-		p1.setCodigo(1L);
-		p2.setCodigo(2L);
-		
-		l1.setCantidad(50);
-		l1.setPrecio(500.0);
-		l1.setProducto(p1);
-		
-		l2.setCantidad(70);
-		l2.setPrecio(700.0);
-		l2.setProducto(p2);
-		
-		lineasEngañadoras.add(l1);
-		lineasEngañadoras.add(l2);
-		
-		engañador.setLineasPedido(lineasEngañadoras);
-		
-		createdPedidoDTO = pedidoRepository.save(engañador);
-		
-		//PedidoDTO createdPedidoDTO = pedidoRepository.save(engañador);
-		
-		
-		
-		
-		
-		
-	//	final PedidoDTO createdPedidoDTO = pedidoRepository.save(newPedidoDTO);
-		
-		//System.out.println("createdPedidoDTO: " + createdPedidoDTO);
+		pedidoDTO.setCamarero(camareroRepository.getOne(newPedidoDTO.getCamarero().getId()));
+		pedidoDTO.setMesa(newPedidoDTO.getMesa());
+		pedidoDTO.setFecha(newPedidoDTO.getFecha());
+
+		for (LineaPedidoDTO lp: newPedidoDTO.getLineasPedido()) {
+			LineaPedidoDTO lineaPedidoDTO = new LineaPedidoDTO();
+			lineaPedidoDTO.setProducto(productoRepository.getOne(lp.getProducto().getCodigo()));
+			lineaPedidoDTO.setCantidad(lp.getCantidad());
+			lineaPedidoDTO.setPrecio(lp.getPrecio());
+			pedidoDTO.addLineaPedido(lineaPedidoDTO);
+		}
+	
+		PedidoDTO createdPedidoDTO = pedidoRepository.save(pedidoDTO);
 		
 		final Pedido createdPedido = dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 		
