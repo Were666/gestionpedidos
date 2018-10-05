@@ -32,8 +32,6 @@ public class PedidoDTO implements Serializable{
 					allocationSize = 10)
 
     @GeneratedValue(strategy=GenerationType.TABLE, generator = "PEDIDO_GENERATOR")
-
-
 	private Long id;
 	
 	private Date fecha;
@@ -42,7 +40,6 @@ public class PedidoDTO implements Serializable{
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
-	
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	@OrderBy(value="INDICE")
@@ -102,7 +99,6 @@ public class PedidoDTO implements Serializable{
 		lineaPedido.setProducto(null);
 	}
 	
-
 	@Override
 	public String toString() {
 		return "PedidoDTO [id=" + id + ", fecha=" + fecha + ", mesa=" + mesa + ", camarero=" + camarero + ", lineasPedido="
