@@ -30,23 +30,7 @@ public class BatchConfiguration {
 
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
-/*	
-    // tag::readerwriterprocessor[]
-    @Bean
-    public FlatFileItemReader<Camarero> reader() {
-        return new FlatFileItemReaderBuilder<Camarero>()
-            .name("personItemReader")
-            .resource(new ClassPathResource("camareros-data.csv"))
-            .delimited()
-            .names(new String[]{"id", "nombre"})
-            .fieldSetMapper(new BeanWrapperFieldSetMapper<Camarero>() {{
-                setTargetType(Camarero.class);
-            }})
-            .build();
-    }
-*/
-    
-    
+
     // tag::readerwriterprocessor[]
     @Bean
     public FlatFileItemReader<Camarero> reader() {
@@ -54,7 +38,6 @@ public class BatchConfiguration {
     	FlatFileItemReaderBuilder<Camarero>  flatFileItemReaderBuilder = new FlatFileItemReaderBuilder<Camarero>();
     	FlatFileItemReader<Camarero> flatFileItemReader = null;
     	
-    
     	ClassPathResource classPathResource = new ClassPathResource("camareros-data.csv");
     	
     	BeanWrapperFieldSetMapper<Camarero> beanWrapperFieldSetMapper = new BeanWrapperFieldSetMapper<Camarero>();
@@ -109,6 +92,24 @@ public class BatchConfiguration {
             .build();
     }
     // end::jobstep[]
+    
+    
+    
+    /*	
+    // tag::readerwriterprocessor[]
+    @Bean
+    public FlatFileItemReader<Camarero> reader() {
+        return new FlatFileItemReaderBuilder<Camarero>()
+            .name("personItemReader")
+            .resource(new ClassPathResource("camareros-data.csv"))
+            .delimited()
+            .names(new String[]{"id", "nombre"})
+            .fieldSetMapper(new BeanWrapperFieldSetMapper<Camarero>() {{
+                setTargetType(Camarero.class);
+            }})
+            .build();
+    }
+*/
     
 
 }
