@@ -9,7 +9,7 @@ public class CamareroItemProcessor implements ItemProcessor<Camarero,Camarero> {
 	@Override
 	public Camarero process(final Camarero camarero) throws Exception {
 		
-		final String nombreMayusculas = camarero.getNombre();
+		final String nombreMayusculas = camarero.getNombre().toUpperCase();
 		
 		final Camarero transformedCamarero = new Camarero();
 		
