@@ -23,22 +23,25 @@ import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
 
 @Configuration
 @EnableBatchProcessing
-public class BatchConfiguration {
+public class Job1Config {
 
 	@Autowired
     public JobBuilderFactory jobBuilderFactory;
 
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
+    
+    @Autowired
+    public DataSource dataSource;
 
     // tag::readerwriterprocessor[]
     @Bean
     public FlatFileItemReader<Camarero> reader() {
-    	
+  
     	FlatFileItemReaderBuilder<Camarero>  flatFileItemReaderBuilder = new FlatFileItemReaderBuilder<Camarero>();
     	FlatFileItemReader<Camarero> flatFileItemReader = null;
     	
-    	ClassPathResource classPathResource = new ClassPathResource("camareros-data.csv");
+    	ClassPathResource classPathResource = new ClassPathResource("csv/camareros-to-database.csv");
     	
     	BeanWrapperFieldSetMapper<Camarero> beanWrapperFieldSetMapper = new BeanWrapperFieldSetMapper<Camarero>();
     	beanWrapperFieldSetMapper.setTargetType(Camarero.class);
@@ -55,7 +58,6 @@ public class BatchConfiguration {
     	return flatFileItemReader;	
     }
     
-    
     @Bean
     public CamareroItemProcessor processor() {
     	return new CamareroItemProcessor();
@@ -69,10 +71,11 @@ public class BatchConfiguration {
             .dataSource(dataSource)
             .build();
     }
-    // end::readerwriterprocessor[]
-      
+    // end::readerprocessorwriter[]
+     
+
     // tag::jobstep[]
-    @Bean
+    @Bean(name="importCamareroJob")
     public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
         return jobBuilderFactory.get("importCamareroJob")
             .incrementer(new RunIdIncrementer())
@@ -82,7 +85,7 @@ public class BatchConfiguration {
             .build();
     }
 
-    @Bean
+    @Bean(name="step1")
     public Step step1(JdbcBatchItemWriter<Camarero> writer) {
         return stepBuilderFactory.get("step1")
             .<Camarero, Camarero> chunk(10)
@@ -92,24 +95,6 @@ public class BatchConfiguration {
             .build();
     }
     // end::jobstep[]
-    
-    
-    
-    /*	
-    // tag::readerwriterprocessor[]
-    @Bean
-    public FlatFileItemReader<Camarero> reader() {
-        return new FlatFileItemReaderBuilder<Camarero>()
-            .name("personItemReader")
-            .resource(new ClassPathResource("camareros-data.csv"))
-            .delimited()
-            .names(new String[]{"id", "nombre"})
-            .fieldSetMapper(new BeanWrapperFieldSetMapper<Camarero>() {{
-                setTargetType(Camarero.class);
-            }})
-            .build();
-    }
-*/
     
 
 }

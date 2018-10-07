@@ -10,10 +10,13 @@ public class CamareroItemProcessor implements ItemProcessor<Camarero,Camarero> {
 	public Camarero process(final Camarero camarero) throws Exception {
 		
 		final String nombreMayusculas = camarero.getNombre().toUpperCase();
+		final long randomId = (long)(Math.random() * 1000000);
 		
 		final Camarero transformedCamarero = new Camarero();
 		
-		transformedCamarero.setId(camarero.getId());
+		transformedCamarero.setId(randomId);
+		
+//		transformedCamarero.setId(camarero.getId());	
 		transformedCamarero.setNombre(nombreMayusculas);
 		
 		System.out.println("Converting (" + camarero + ") into (" + transformedCamarero + ")");
