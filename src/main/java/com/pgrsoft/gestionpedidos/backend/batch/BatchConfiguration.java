@@ -30,7 +30,7 @@ public class BatchConfiguration {
 
     @Autowired
     public StepBuilderFactory stepBuilderFactory;
-	
+/*	
     // tag::readerwriterprocessor[]
     @Bean
     public FlatFileItemReader<Camarero> reader() {
@@ -44,6 +44,34 @@ public class BatchConfiguration {
             }})
             .build();
     }
+*/
+    
+    
+    // tag::readerwriterprocessor[]
+    @Bean
+    public FlatFileItemReader<Camarero> reader() {
+    	
+    	FlatFileItemReaderBuilder<Camarero>  flatFileItemReaderBuilder = new FlatFileItemReaderBuilder<Camarero>();
+    	FlatFileItemReader<Camarero> flatFileItemReader = null;
+    	
+    
+    	ClassPathResource classPathResource = new ClassPathResource("camareros-data.csv");
+    	
+    	BeanWrapperFieldSetMapper<Camarero> beanWrapperFieldSetMapper = new BeanWrapperFieldSetMapper<Camarero>();
+    	beanWrapperFieldSetMapper.setTargetType(Camarero.class);
+    	
+    	flatFileItemReaderBuilder
+    		.name("camareroItemReader")
+    		.resource(classPathResource)
+    		.delimited()
+    			.names(new String[] {"id", "nombre"})					//nombre de los campos
+    			.fieldSetMapper(beanWrapperFieldSetMapper).build();
+    	
+    	flatFileItemReader = flatFileItemReaderBuilder.build();
+    	
+    	return flatFileItemReader;	
+    }
+    
     
     @Bean
     public CamareroItemProcessor processor() {
