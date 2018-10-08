@@ -29,7 +29,7 @@ public class PedidoServicesImpl implements PedidoServices {
 	
 	@Autowired
 	private ProductoRepository productoRepository;
-		
+	
 	@Autowired
 	private DozerBeanMapper dozerBeanMapper;
 	
@@ -85,16 +85,24 @@ public class PedidoServicesImpl implements PedidoServices {
 			lineaPedidoDTO.setPrecio(lp.getPrecio());
 			pedidoDTO.addLineaPedido(lineaPedidoDTO);
 		}
-	
-		PedidoDTO createdPedidoDTO = pedidoRepository.saveAndFlush(pedidoDTO);
+		
+		//Alternativo, para poder reutilizar el newPedidoDTO que nos llega...
+		for (LineaPedidoDTO lp: newPedidoDTO.getLineasPedido()) {
+			lp.setPedido(newPedidoDTO);
+		}
+		
+		//PedidoDTO createdPedidoDTO = pedidoRepository.saveAndFlush(pedidoDTO);
+		PedidoDTO createdPedidoDTO = pedidoRepository.save(newPedidoDTO);
 		
 		// Si aquí flush.... el problema desaparece...
 	
 		createdPedidoDTO = pedidoRepository.getOne((createdPedidoDTO.getId())); // FORZANDO...
-		
+	
 		final Pedido createdPedido = dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 		
 		return createdPedido;
 	}
+	
+
 
 }
