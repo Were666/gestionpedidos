@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
-import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
+import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
 
 @Service
+@Transactional
 public class PedidoServicesImpl implements PedidoServices {
 
 	@Autowired
@@ -49,7 +50,6 @@ public class PedidoServicesImpl implements PedidoServices {
 		return pedido;
 	}
 
-	
 	@Override
 	public List<Pedido> getAll() {
 		
@@ -62,57 +62,42 @@ public class PedidoServicesImpl implements PedidoServices {
 		return pedidos;
 	}
 
-
+	/*
+	 * Implementación definitiva de create...
+	 * 
+	 * Hemos dado una importancia excesiva a la clase LineaPedidoDTO!
+	 * 
+	 * La hemos considerado @Entity cuando realmente no es necesario (no se lo merece)
+	 * 
+	 * LineaPedidoDTO puede ser un @Embeddable (ver ejemplo de ClienteDTO y ContactoDTO)
+	 * 
+	 * Hay que tener en cuenta que:
+	 * 
+	 * 1.- Un embedabble puede tener un atributo que sea una @Entity o incluso una colección.
+	 *     En nuestro ejemplo eso afectaría al atributo producto de LineaPedidoDTO
+	 * 
+	 * 2.- Siendo LineaPedidoDTO un embeddable (no siendo una @Entity) también se pueden  
+	 * 	   realizar (hay varias alternativas para ello) queries sobre la tabla LINEAS_PEDIDO.
+	 * 
+	 */
+	
 	@Override
-	@Transactional
 	public Pedido create(Pedido pedido) throws Exception {
 		
-		final PedidoDTO newPedidoDTO = dozerBeanMapper.map(pedido, PedidoDTO.class);
-/*		
-		final PedidoDTO pedidoDTO = new PedidoDTO();
+		final PedidoDTO pedidoDTO = dozerBeanMapper.map(pedido, PedidoDTO.class);
+		final CamareroDTO camareroDTO = camareroRepository.getOne(pedidoDTO.getCamarero().getId());
 		
-		pedidoDTO.setCamarero(camareroRepository.getOne(newPedidoDTO.getCamarero().getId()));
-		
-		pedidoDTO.setCamarero(newPedidoDTO.getCamarero());
-		
-		pedidoDTO.setMesa(newPedidoDTO.getMesa());
-		pedidoDTO.setFecha(newPedidoDTO.getFecha());
-
-		for (LineaPedidoDTO lp: newPedidoDTO.getLineasPedido()) {
-			LineaPedidoDTO lineaPedidoDTO = new LineaPedidoDTO();
-			lineaPedidoDTO.setProducto(productoRepository.getOne(lp.getProducto().getCodigo()));
-			lineaPedidoDTO.setCantidad(lp.getCantidad());
-			lineaPedidoDTO.setPrecio(lp.getPrecio());
-			pedidoDTO.addLineaPedido(lineaPedidoDTO);
-		}
-*/		
-		//Alternativo, para poder reutilizar el newPedidoDTO que nos llega...
-		for (LineaPedidoDTO lp: newPedidoDTO.getLineasPedido()) {
-			lp.setPedido(newPedidoDTO);
-		}
-		
-		//PedidoDTO createdPedidoDTO = pedidoRepository.saveAndFlush(pedidoDTO);
-		PedidoDTO createdPedidoDTO = pedidoRepository.save(newPedidoDTO);
-		
-		// Si aquí flush.... el problema desaparece...
+		pedidoDTO.setCamarero(camareroDTO);
 	
-		pedidoRepository.flush();
+		pedidoDTO.getLineasPedido().stream()
+			.forEach(x -> {
+				x.setProducto(productoRepository.getOne(x.getProducto().getCodigo()));
+				x.setPedido(pedidoDTO);
+			});
 		
-		createdPedidoDTO = pedidoRepository.getOne((createdPedidoDTO.getId())); // FORZANDO...
+		PedidoDTO createdPedidoDTO = pedidoRepository.save(pedidoDTO);
 	
-		Optional<PedidoDTO> optional = pedidoRepository.findById(createdPedidoDTO.getId());
-		
-		if (optional.isPresent()) {
-			createdPedidoDTO = optional.get();
-		}
-		
-		System.out.println("createdPedidoDTO: " + createdPedidoDTO);
-		
-		final Pedido createdPedido = dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
-		
-		return createdPedido;
+		return dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 	}
 	
-
-
 }
