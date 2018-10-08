@@ -6,9 +6,12 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 @Entity
 @Table(name="CLIENTES")
@@ -16,7 +19,16 @@ public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = -54661L;
 
 	@Id
+    @TableGenerator(name = "CLIENTE_GENERATOR",
+					table = "SECUENCIAS",
+					pkColumnName = "SEQ_NAME",
+					pkColumnValue = "CLIENTE_SEQ",
+					valueColumnName = "SEQ_NUMBER",
+					allocationSize = 10)
+	
+	@GeneratedValue(strategy=GenerationType.TABLE, generator = "CLIENTE_GENERATOR")
 	private Long id;
+	
 	private String nombre;
 	
 	@ElementCollection

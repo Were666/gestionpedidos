@@ -41,10 +41,15 @@ public class ClienteServicesImpl implements ClienteServices {
 	}
 
 	@Override
-	public Cliente create(Cliente cliente) {
-		// TODO Auto-generated method stub
-		// Ahora no...
-		return null;
+	public Cliente create(final Cliente cliente) {
+		
+		final ClienteDTO newClienteDTO = this.dozerBeanMapper.map(cliente, ClienteDTO.class);
+		
+		final ClienteDTO createdClienteDTO = this.clienteRepository.save(newClienteDTO);
+		
+		final Cliente createdCliente = this.dozerBeanMapper.map(createdClienteDTO, Cliente.class);
+		
+		return createdCliente;
 	}
 
 }

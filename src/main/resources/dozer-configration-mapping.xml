@@ -15,6 +15,15 @@
     	</field>
   	</mapping>
   	
+  	<mapping> 
+    	<class-a>com.pgrsoft.gestionpedidos.backend.business.model.Cliente</class-a>
+    	<class-b>com.pgrsoft.gestionpedidos.backend.presentation.model.ClienteVO</class-b>
+    	<field>
+      		<a>id</a>
+      		<b>codigo</b>
+    	</field>
+  	</mapping>
+  	
   	
   	<!-- Business TO Integration -->
 
