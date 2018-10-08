@@ -3,6 +3,8 @@ package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 
 @Service
+@Transactional
 public class CamareroServicesImpl implements CamareroServices {
 
 	@Autowired

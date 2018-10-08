@@ -3,6 +3,8 @@ package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.ClienteDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ClienteRepository;
 
 @Service
+@Transactional
 public class ClienteServicesImpl implements ClienteServices {
 
 	@Autowired
@@ -23,8 +26,8 @@ public class ClienteServicesImpl implements ClienteServices {
 	
 	@Override
 	public Cliente getById(Long id) {
-		final ClienteDTO clienteDTO = this.clienteRepository.getOne(id);
-		final Cliente cliente = this.dozerBeanMapper.map(clienteDTO, Cliente.class);
+		final ClienteDTO clienteDTO = clienteRepository.getOne(id);
+		final Cliente cliente = dozerBeanMapper.map(clienteDTO, Cliente.class);
 		
 		return cliente;
 	}
@@ -32,10 +35,10 @@ public class ClienteServicesImpl implements ClienteServices {
 	@Override
 	public List<Cliente> getAll() {
 		
-		final List<ClienteDTO> clientesDTO = this.clienteRepository.findAll();
+		final List<ClienteDTO> clientesDTO = clienteRepository.findAll();
 		
 		return clientesDTO.stream()
-			.map(x -> this.dozerBeanMapper.map(x, Cliente.class))
+			.map(x -> dozerBeanMapper.map(x, Cliente.class))
 			.collect(Collectors.toList());
 	
 	}
@@ -43,11 +46,11 @@ public class ClienteServicesImpl implements ClienteServices {
 	@Override
 	public Cliente create(final Cliente cliente) {
 		
-		final ClienteDTO newClienteDTO = this.dozerBeanMapper.map(cliente, ClienteDTO.class);
+		final ClienteDTO newClienteDTO = dozerBeanMapper.map(cliente, ClienteDTO.class);
 		
-		final ClienteDTO createdClienteDTO = this.clienteRepository.save(newClienteDTO);
+		final ClienteDTO createdClienteDTO = clienteRepository.save(newClienteDTO);
 		
-		final Cliente createdCliente = this.dozerBeanMapper.map(createdClienteDTO, Cliente.class);
+		final Cliente createdCliente = dozerBeanMapper.map(createdClienteDTO, Cliente.class);
 		
 		return createdCliente;
 	}

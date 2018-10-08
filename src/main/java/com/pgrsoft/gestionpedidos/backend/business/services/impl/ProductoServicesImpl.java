@@ -3,6 +3,8 @@ package com.pgrsoft.gestionpedidos.backend.business.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
 
 @Service
+@Transactional
 public class ProductoServicesImpl implements ProductoServices {
 
 	@Autowired
@@ -27,7 +30,7 @@ public class ProductoServicesImpl implements ProductoServices {
 		final List<ProductoDTO> productosDTO = productoRepository.findAll();
 		
 		final List<Producto> productos = productosDTO.stream()
-				.map(x -> this.dozerBeanMapper.map(x, Producto.class))
+				.map(x -> dozerBeanMapper.map(x, Producto.class))
 				.collect(Collectors.toList());
 		
 		return productos;
