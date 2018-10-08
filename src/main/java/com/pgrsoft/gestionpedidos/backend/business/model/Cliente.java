@@ -1,29 +1,17 @@
-package com.pgrsoft.gestionpedidos.backend.integration.model;
+package com.pgrsoft.gestionpedidos.backend.business.model;
 
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="CLIENTES")
-public class ClienteDTO implements Serializable {
+public class Cliente implements Serializable {
 	private static final long serialVersionUID = -54661L;
 
-	@Id
 	private Long id;
 	private String nombre;
 	
-	@ElementCollection
-	@CollectionTable(name="CONTACTOS_CLIENTE",joinColumns=@JoinColumn (name="ID_CLIENTE"))
-	private List<ContactoDTO> contactos;
+	private List<Contacto> contactos;
 	
-	public ClienteDTO() {
+	public Cliente() {
 		
 	}
 
@@ -43,11 +31,11 @@ public class ClienteDTO implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<ContactoDTO> getContactos() {
+	public List<Contacto> getContactos() {
 		return contactos;
 	}
 
-	public void setContactos(List<ContactoDTO> contactos) {
+	public void setContactos(List<Contacto> contactos) {
 		this.contactos = contactos;
 	}
 
@@ -68,7 +56,7 @@ public class ClienteDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ClienteDTO other = (ClienteDTO) obj;
+		Cliente other = (Cliente) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -79,7 +67,7 @@ public class ClienteDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ClienteDTO [id=" + id + ", nombre=" + nombre + ", contactos=" + contactos + "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", contactos=" + contactos + "]";
 	}
-	
+
 }
