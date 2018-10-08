@@ -68,7 +68,7 @@ public class PedidoServicesImpl implements PedidoServices {
 	public Pedido create(Pedido pedido) throws Exception {
 		
 		final PedidoDTO newPedidoDTO = dozerBeanMapper.map(pedido, PedidoDTO.class);
-		
+/*		
 		final PedidoDTO pedidoDTO = new PedidoDTO();
 		
 		pedidoDTO.setCamarero(camareroRepository.getOne(newPedidoDTO.getCamarero().getId()));
@@ -85,7 +85,7 @@ public class PedidoServicesImpl implements PedidoServices {
 			lineaPedidoDTO.setPrecio(lp.getPrecio());
 			pedidoDTO.addLineaPedido(lineaPedidoDTO);
 		}
-		
+*/		
 		//Alternativo, para poder reutilizar el newPedidoDTO que nos llega...
 		for (LineaPedidoDTO lp: newPedidoDTO.getLineasPedido()) {
 			lp.setPedido(newPedidoDTO);
@@ -96,8 +96,18 @@ public class PedidoServicesImpl implements PedidoServices {
 		
 		// Si aquí flush.... el problema desaparece...
 	
+		pedidoRepository.flush();
+		
 		createdPedidoDTO = pedidoRepository.getOne((createdPedidoDTO.getId())); // FORZANDO...
 	
+		Optional<PedidoDTO> optional = pedidoRepository.findById(createdPedidoDTO.getId());
+		
+		if (optional.isPresent()) {
+			createdPedidoDTO = optional.get();
+		}
+		
+		System.out.println("createdPedidoDTO: " + createdPedidoDTO);
+		
 		final Pedido createdPedido = dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 		
 		return createdPedido;
