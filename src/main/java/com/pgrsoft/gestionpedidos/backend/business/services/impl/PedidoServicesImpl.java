@@ -72,6 +72,9 @@ public class PedidoServicesImpl implements PedidoServices {
 		final PedidoDTO pedidoDTO = new PedidoDTO();
 		
 		pedidoDTO.setCamarero(camareroRepository.getOne(newPedidoDTO.getCamarero().getId()));
+		
+		pedidoDTO.setCamarero(newPedidoDTO.getCamarero());
+		
 		pedidoDTO.setMesa(newPedidoDTO.getMesa());
 		pedidoDTO.setFecha(newPedidoDTO.getFecha());
 
@@ -83,7 +86,11 @@ public class PedidoServicesImpl implements PedidoServices {
 			pedidoDTO.addLineaPedido(lineaPedidoDTO);
 		}
 	
-		PedidoDTO createdPedidoDTO = pedidoRepository.save(pedidoDTO);
+		PedidoDTO createdPedidoDTO = pedidoRepository.saveAndFlush(pedidoDTO);
+		
+		// Si aquí flush.... el problema desaparece...
+	
+		createdPedidoDTO = pedidoRepository.getOne((createdPedidoDTO.getId())); // FORZANDO...
 		
 		final Pedido createdPedido = dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 		

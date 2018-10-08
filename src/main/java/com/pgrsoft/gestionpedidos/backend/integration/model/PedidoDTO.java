@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -42,7 +41,7 @@ public class PedidoDTO implements Serializable{
 	private CamareroDTO camarero;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(value="INDICE")
+	//@OrderBy(value="INDICE")
 	private List<LineaPedidoDTO> lineasPedido = new ArrayList<LineaPedidoDTO>();
 	
 	public PedidoDTO() {
