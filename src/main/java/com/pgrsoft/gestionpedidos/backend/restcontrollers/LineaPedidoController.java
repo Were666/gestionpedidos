@@ -7,32 +7,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
 
+//TODO Haría falta mapear LineaPedidoDTO -> LineaPedido -> LineaPedidoVOº
+
 @RestController
-public class BorrameController {
+public class LineaPedidoController {
 
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
-	
 	@RequestMapping("/lineas")
-	public String prueba() {
-		
-		pedidoRepository.getLineasPedido().stream().forEach(x -> {
-			System.out.println(x);
-		});
-		
-		return "funciona!";
+	public List<LineaPedidoDTO> getAll() {
+		return pedidoRepository.getLineasPedido();
 	}
 	
 	@RequestMapping("/lineas/{idProducto}")
-	public List<Object[]> prueba2(@PathVariable("idProducto") Long idProducto) {
+	public List<Object[]> getFilteredByProductId (@PathVariable("idProducto") Long idProducto) {
 		List<Object[]> tabla = pedidoRepository.getLineasPedidoByProductoId(idProducto);
 		return tabla;
 	}
 	
-	
-	
-	
+
 }
