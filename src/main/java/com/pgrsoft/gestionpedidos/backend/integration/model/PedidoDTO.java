@@ -1,11 +1,11 @@
 package com.pgrsoft.gestionpedidos.backend.integration.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,8 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.OrderColumn;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
@@ -40,10 +39,11 @@ public class PedidoDTO implements Serializable{
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ID_CAMARERO")
 	private CamareroDTO camarero;
-	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-	@OrderBy(value="INDICE")
-	private List<LineaPedidoDTO> lineasPedido = new ArrayList<LineaPedidoDTO>();
+
+	@ElementCollection
+	@OrderColumn(name="INDICE")
+	@CollectionTable(name="LINEAS_PEDIDO", joinColumns=@JoinColumn(name="ID_PEDIDO"))
+	private List<LineaPedidoDTO> lineasPedido;
 	
 	public PedidoDTO() {
 		
@@ -91,12 +91,10 @@ public class PedidoDTO implements Serializable{
 	
 	public void addLineaPedido(LineaPedidoDTO lineaPedido) {
 		lineasPedido.add(lineaPedido);
-		lineaPedido.setPedido(this);
 	}
 	
 	public void removeLineaPedido(LineaPedidoDTO lineaPedido) {
 		lineasPedido.remove(lineaPedido);
-		lineaPedido.setProducto(null);
 	}
 	
 	@Override

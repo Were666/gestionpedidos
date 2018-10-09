@@ -5,21 +5,12 @@ import java.io.Serializable;
 public class LineaPedidoVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long id;
 	private ProductoVO producto;
 	private int cantidad;
 	private double precio;
 	
 	public LineaPedidoVO() {
 		
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public ProductoVO getProducto() {
@@ -48,8 +39,7 @@ public class LineaPedidoVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "LineaPedidoVO [id=" + id + ", producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio
-				+ "]";
+		return "LineaPedidoVO [producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio + "]";
 	}
-	
+
 }

@@ -80,7 +80,26 @@ public class PedidoServicesImpl implements PedidoServices {
 	 * 	   realizar (hay varias alternativas para ello) queries sobre la tabla LINEAS_PEDIDO.
 	 * 
 	 */
+
+	@Override
+	public Pedido create(Pedido pedido) throws Exception {
+		
+		final PedidoDTO pedidoDTO = dozerBeanMapper.map(pedido, PedidoDTO.class);
+		final CamareroDTO camareroDTO = camareroRepository.getOne(pedidoDTO.getCamarero().getId());
+		pedidoDTO.setCamarero(camareroDTO);
+		
+		pedidoDTO.getLineasPedido().stream()
+		.forEach(x -> {
+			x.setProducto(productoRepository.getOne(x.getProducto().getCodigo()));
+		});
+		
+		PedidoDTO createdPedidoDTO = pedidoRepository.save(pedidoDTO);
+		
+		return dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
+		
+	}
 	
+	/*
 	@Override
 	public Pedido create(Pedido pedido) throws Exception {
 		
@@ -99,5 +118,6 @@ public class PedidoServicesImpl implements PedidoServices {
 	
 		return dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 	}
+	*/
 	
 }
