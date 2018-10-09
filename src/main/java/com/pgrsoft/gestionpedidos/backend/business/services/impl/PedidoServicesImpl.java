@@ -10,9 +10,11 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.LineaPedido;
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
 import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
+import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.PedidoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
@@ -97,6 +99,25 @@ public class PedidoServicesImpl implements PedidoServices {
 		
 		return dozerBeanMapper.map(createdPedidoDTO, Pedido.class);
 		
+	}
+
+	@Override
+	public List<LineaPedido> getLineasPedido() {
+		
+		final List<LineaPedidoDTO> lineasDTO = this.pedidoRepository.getLineasPedido();
+		
+		System.out.println("()()()()()()()()()()()()()()()()()()()()()()()()");
+		System.out.println(lineasDTO);
+		
+		
+	/*	
+		return lineasDTO.stream()
+			.map(x -> this.dozerBeanMapper.map(x, LineaPedido.class))
+			.collect(Collectors.toList());
+	*/
+		
+		return null;
+	
 	}
 	
 	/*

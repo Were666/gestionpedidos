@@ -22,6 +22,12 @@ public class LineaPedidoDTO implements Serializable {
 	public LineaPedidoDTO() {
 		
 	}
+	
+	public LineaPedidoDTO(ProductoDTO producto, int cantidad, double precio) {
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.precio = precio;
+	}
 
 	public ProductoDTO getProducto() {
 		return producto;
@@ -46,4 +52,11 @@ public class LineaPedidoDTO implements Serializable {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
+
+	@Override
+	public String toString() {
+		return "LineaPedidoDTO [producto=" + producto + ", cantidad=" + cantidad + ", precio=" + precio + "]";
+	}
+	
+	
 }
