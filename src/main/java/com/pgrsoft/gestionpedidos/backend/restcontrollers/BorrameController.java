@@ -1,6 +1,9 @@
 package com.pgrsoft.gestionpedidos.backend.restcontrollers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +16,7 @@ public class BorrameController {
 	private PedidoRepository pedidoRepository;
 	
 	
-	@RequestMapping("/prueba")
+	@RequestMapping("/lineas")
 	public String prueba() {
 		
 		pedidoRepository.getLineasPedido().stream().forEach(x -> {
@@ -22,5 +25,14 @@ public class BorrameController {
 		
 		return "funciona!";
 	}
+	
+	@RequestMapping("/lineas/{idProducto}")
+	public List<Object[]> prueba2(@PathVariable("idProducto") Long idProducto) {
+		List<Object[]> tabla = pedidoRepository.getLineasPedidoByProductoId(idProducto);
+		return tabla;
+	}
+	
+	
+	
 	
 }

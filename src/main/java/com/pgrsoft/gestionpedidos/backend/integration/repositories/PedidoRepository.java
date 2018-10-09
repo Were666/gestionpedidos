@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
@@ -16,5 +17,11 @@ public interface PedidoRepository extends JpaRepository<PedidoDTO, Long>{
 
 	@Query("select new " + PATH + "LineaPedidoDTO (lp.producto,lp.cantidad,lp.precio) FROM PedidoDTO p JOIN p.lineasPedido lp")
 	List<LineaPedidoDTO> getLineasPedido ();
+	
+	
+	@Query("select lp.producto, lp.producto.precio,lp.cantidad ,lp.precio "
+		 + "FROM PedidoDTO p JOIN p.lineasPedido lp "
+		 + "WHERE lp.producto.codigo = :codigoProducto"	)
+	List<Object[]> getLineasPedidoByProductoId(@Param ("codigoProducto") Long codigoProducto);
 	
 }
