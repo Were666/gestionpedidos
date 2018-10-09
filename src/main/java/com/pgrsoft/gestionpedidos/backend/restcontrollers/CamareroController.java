@@ -56,8 +56,6 @@ public class CamareroController {
 		
 		try {
 			camareros = camareroPresentationServices.getAll();
-			camareros.get(0).setNombre("CARICATO");
-			
 		} catch (Exception e) {
 			//TODO
 		}
