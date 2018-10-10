@@ -13,9 +13,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 	    registry
 	      .addResourceHandler("/files/**")
-	      .addResourceLocations("file:///C:/opt/files/");
+	      .addResourceLocations("file:///C:/users/sinensia/opt/files/");
 	    
-	      // localhost:8086/api/files/loquesea.jpg 
+	      // localhost:8080/api/files/loquesea.jpg 
 	    
 	      // funcionará si en c: existe una carpeta opt con una subcarpeta files con loquesea.jpg!  
 	 }

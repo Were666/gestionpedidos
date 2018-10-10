@@ -25,7 +25,7 @@ public class CamareroServicesImpl implements CamareroServices {
 	private DozerBeanMapper dozerBeanMapper;
 	
 	@Override
-	public Camarero getById(Long id) {
+	public Camarero getById(Long id) throws IllegalArgumentException {
 		final CamareroDTO camareroDTO = camareroRepository.getOne(id);
 		final Camarero camarero = dozerBeanMapper.map(camareroDTO, Camarero.class);
 		return camarero;

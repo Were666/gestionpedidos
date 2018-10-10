@@ -64,6 +64,9 @@ public class ProductoServicesImpl implements ProductoServices {
 		
 		Page<ProductoDTO> page = this.productopageableRepository.findAll(PageRequest.of(numeroPagina, numeroElementos));
 		
+		
+		List<Producto> cosas = pagina.getElementos();
+		
 		//TODO
 		
 		
