@@ -15,4 +15,7 @@ public interface PedidoServices {
 	
 	public List<LineaPedido> getLineasPedido();
 	
+	// TODO Cómo paginar!!!!!!!! 
+	
+	
 }

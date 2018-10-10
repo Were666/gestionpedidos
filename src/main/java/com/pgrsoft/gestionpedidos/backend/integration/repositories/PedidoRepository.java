@@ -19,7 +19,7 @@ public interface PedidoRepository extends JpaRepository<PedidoDTO, Long>{
 	List<LineaPedidoDTO> getLineasPedido ();
 	
 	
-	@Query("select lp.producto, lp.producto.precio,lp.cantidad ,lp.precio "
+	@Query("select lp.producto.codigo, lp.producto.precio,lp.cantidad ,lp.precio "
 		 + "FROM PedidoDTO p JOIN p.lineasPedido lp "
 		 + "WHERE lp.producto.codigo = :codigoProducto"	)
 	List<Object[]> getLineasPedidoByProductoId(@Param ("codigoProducto") Long codigoProducto);
