@@ -43,6 +43,7 @@ public class ProductoController {
 	@GetMapping(value="/{codigo}")
 	public ProductoVO getById(@PathVariable ("codigo") Long codigo) {
 		
+		
 		ProductoVO producto = null;
 		
 		try {

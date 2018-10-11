@@ -13,9 +13,11 @@ public interface PedidoServices {
 	
 	public Pedido create(Pedido pedido) throws Exception;
 	
+	
+	// Obtención de lineas de pedido
+	
 	public List<LineaPedido> getLineasPedido();
 	
-	// TODO Cómo paginar!!!!!!!! 
-	
+	public List<LineaPedido> getLineasPedidoByCodigoProducto(long codigoProducto);
 	
 }

@@ -7,26 +7,43 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pgrsoft.gestionpedidos.backend.integration.model.LineaPedidoDTO;
-import com.pgrsoft.gestionpedidos.backend.integration.repositories.PedidoRepository;
-
-//TODO Haría falta mapear LineaPedidoDTO -> LineaPedido -> LineaPedidoVOº
+import com.pgrsoft.gestionpedidos.backend.presentation.model.LineaPedidoVO;
+import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
 
 @RestController
 public class LineaPedidoController {
 
 	@Autowired
-	private PedidoRepository pedidoRepository;
+	private PedidoPresentationServices pedidoPresentationServices;
 	
 	@RequestMapping("/lineas")
-	public List<LineaPedidoDTO> getAll() {
-		return pedidoRepository.getLineasPedido();
+	public List<LineaPedidoVO> getAll() {
+		
+		List<LineaPedidoVO> lineasPedidoVO = null;
+		
+		try {
+			lineasPedidoVO = pedidoPresentationServices.getAllLineas();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lineasPedidoVO;
 	}
 	
 	@RequestMapping("/lineas/{idProducto}")
-	public List<Object[]> getFilteredByProductId (@PathVariable("idProducto") Long idProducto) {
-		List<Object[]> tabla = pedidoRepository.getLineasPedidoByProductoId(idProducto);
-		return tabla;
+	public List<LineaPedidoVO> getFilteredByProductId (@PathVariable("idProducto") Long idProducto) {
+		
+		List<LineaPedidoVO> lineasPedidoVO = null;
+		
+		try {
+			lineasPedidoVO = pedidoPresentationServices.getLineasPedidoByCodigoProducto(idProducto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return lineasPedidoVO;
 	}
 	
 

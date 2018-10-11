@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Pedido;
 import com.pgrsoft.gestionpedidos.backend.business.services.PedidoServices;
+import com.pgrsoft.gestionpedidos.backend.presentation.model.LineaPedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
 
@@ -64,5 +65,25 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 		
 		return createdPedidoVO;
 	}
+
+	@Override
+	public List<LineaPedidoVO> getAllLineas() throws Exception {
+		
+		return pedidoServices.getLineasPedido()
+				.stream()
+				.map(x -> dozerBeanMapper.map(x, LineaPedidoVO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<LineaPedidoVO> getLineasPedidoByCodigoProducto(long codigoProducto) throws Exception {
+		
+		return pedidoServices.getLineasPedidoByCodigoProducto(codigoProducto)
+				.stream()
+				.map(x -> dozerBeanMapper.map(x, LineaPedidoVO.class))
+				.collect(Collectors.toList());
+	}
+
+
 
 }

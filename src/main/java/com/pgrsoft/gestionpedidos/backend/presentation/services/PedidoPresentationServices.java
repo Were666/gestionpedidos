@@ -2,6 +2,7 @@ package com.pgrsoft.gestionpedidos.backend.presentation.services;
 
 import java.util.List;
 
+import com.pgrsoft.gestionpedidos.backend.presentation.model.LineaPedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 
 public interface PedidoPresentationServices {
@@ -11,5 +12,9 @@ public interface PedidoPresentationServices {
 	public List<PedidoVO> getAll() throws Exception;
 	
 	public PedidoVO create(PedidoVO pedidoVO) throws Exception;
+	
+	public List<LineaPedidoVO> getAllLineas() throws Exception;
+	
+	public List<LineaPedidoVO> getLineasPedidoByCodigoProducto(long codigoProducto) throws Exception;
 	
 }
