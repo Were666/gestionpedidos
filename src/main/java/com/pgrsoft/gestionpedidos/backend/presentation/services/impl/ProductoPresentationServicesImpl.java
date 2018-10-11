@@ -88,14 +88,13 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 		paginaVO.setNumeroTotalElementos(pagina.getNumeroTotalElementos());
 		paginaVO.setNumeroPagina(pagina.getNumeroPagina());
 		paginaVO.setNumeroElementos(pagina.getNumeroElementos());
-		
+		paginaVO.setNumeroTotalPaginas(pagina.getNumeroTotalPaginas());
 		
 		paginaVO.setPrimeraPagina(pagina.isPrimeraPagina());
 		paginaVO.setUltimaPagina(pagina.isUltimaPagina());
 	
 		return paginaVO;
-		
-	
+
 	}
 
 }

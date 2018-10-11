@@ -9,11 +9,14 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.Categoria;
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.ProductoServices;
 import com.pgrsoft.gestionpedidos.backend.common.Pagina;
+import com.pgrsoft.gestionpedidos.backend.integration.model.CategoriaDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoPageableRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
@@ -69,16 +72,33 @@ public class ProductoServicesImpl implements ProductoServices {
 				.map(x -> this.dozerBeanMapper.map(x, Producto.class))
 				.collect(Collectors.toList());
 		
-		
 		pagina.setElementos(elementos);
 		
 		pagina.setNumeroTotalElementos(page.getTotalElements());
 		pagina.setNumeroPagina(page.getNumber());
+		pagina.setNumeroTotalPaginas(page.getTotalPages());
 		pagina.setNumeroElementos(page.getSize());
-		
 		
 		pagina.setPrimeraPagina(page.isFirst());
 		pagina.setUltimaPagina(page.isLast());
+		
+		return pagina;
+	}
+
+	@Override
+	public Pagina<Producto> getByCategoriaPrecioMenor(Categoria cat, double precio, int numeroPagina,
+			int numeroElementos) throws Exception {
+		
+		CategoriaDTO cate = this.dozerBeanMapper.map(cat,CategoriaDTO.class);
+		
+		Page<ProductoDTO> page = productopageableRepository.findByCategoriaOrPrecioLessThan(
+				cate, 
+				precio,
+				PageRequest.of(numeroPagina, numeroElementos));
+		
+		Pagina pagina = new Pagina();
+		
+		//TODO after break....
 		
 		return pagina;
 	}
