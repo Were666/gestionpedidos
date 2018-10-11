@@ -1,7 +1,5 @@
 package com.pgrsoft.gestionpedidos.backend.restcontrollers;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
 
@@ -23,38 +22,22 @@ public class ProductoController {
 	@Autowired
 	private ProductoPresentationServices productoPresentationServices;
 	
-	@GetMapping(value="")
-	public List<ProductoVO> getAll(){
-		
-		List<ProductoVO> productos = null;
-		
-		System.out.println(" *******************  ENDPOINT GETALL...");
-		
-		try {
-			productos = productoPresentationServices.getAll();
-		} catch (Exception e) {
-			logger.error(e.getMessage());
-			//e.printStackTrace();
-		}
-		
-		return productos;
-	}
 	
-	@GetMapping(value="/page")
-	public List<ProductoVO> getPaginated(@RequestParam("p") Long p){
+	@GetMapping(value="")
+	public Pagina<ProductoVO> getPaginated(@RequestParam("page") Integer numeroPagina,
+										   @RequestParam("size") Integer numeroElementos){
 		
-		List<ProductoVO> productos = null;
 		
-		System.out.println(" *******************  ENDPOINT PAGINADOR...");
+		Pagina<ProductoVO> pagina = null;
 		
 		try {
-			productos = productoPresentationServices.getAll();
+			pagina = productoPresentationServices.getPagina(numeroPagina, numeroElementos);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
-			//e.printStackTrace();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return productos;
+		return pagina;
 	}
 	
 	@GetMapping(value="/{codigo}")

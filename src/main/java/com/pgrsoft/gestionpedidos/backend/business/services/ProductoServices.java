@@ -2,8 +2,8 @@ package com.pgrsoft.gestionpedidos.backend.business.services;
 
 import java.util.List;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Pagina;
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
+import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 
 public interface ProductoServices {
 
@@ -13,6 +13,6 @@ public interface ProductoServices {
 	
 	public Producto create(Producto producto) throws Exception;
 	
-	public Pagina<Producto> getPagina(int numeroPagina, int numeroElementos);
+	public Pagina<Producto> getPagina(int numeroPagina, int numeroElementos) throws Exception;
 	
 }

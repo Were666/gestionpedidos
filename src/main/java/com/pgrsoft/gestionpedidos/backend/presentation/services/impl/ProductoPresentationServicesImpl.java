@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.ProductoServices;
+import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
 
@@ -68,6 +69,33 @@ public class ProductoPresentationServicesImpl implements ProductoPresentationSer
 		}
 		
 		return createdProductoVO;
+	}
+
+	@Override
+	public Pagina<ProductoVO> getPagina(int numeroPagina, int numeroElementos) throws Exception{
+		
+		Pagina<Producto> pagina = this.productoServices.getPagina(numeroPagina, numeroElementos);
+		
+		Pagina<ProductoVO> paginaVO = new Pagina<>();
+		
+		List<ProductoVO> productosVO = pagina.getElementos()
+				.stream()
+				.map(x -> dozerBeanMapper.map(x,ProductoVO.class))
+				.collect(Collectors.toList());
+				
+		paginaVO.setElementos(productosVO);
+		
+		paginaVO.setNumeroTotalElementos(pagina.getNumeroTotalElementos());
+		paginaVO.setNumeroPagina(pagina.getNumeroPagina());
+		paginaVO.setNumeroElementos(pagina.getNumeroElementos());
+		
+		
+		paginaVO.setPrimeraPagina(pagina.isPrimeraPagina());
+		paginaVO.setUltimaPagina(pagina.isUltimaPagina());
+	
+		return paginaVO;
+		
+	
 	}
 
 }

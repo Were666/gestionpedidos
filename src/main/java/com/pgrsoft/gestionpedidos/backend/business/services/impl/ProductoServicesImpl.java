@@ -11,9 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import com.pgrsoft.gestionpedidos.backend.business.model.Pagina;
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.ProductoServices;
+import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoPageableRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
@@ -60,15 +60,25 @@ public class ProductoServicesImpl implements ProductoServices {
 	@Override
 	public Pagina<Producto> getPagina(int numeroPagina, int numeroElementos) {
 		
-		Pagina<Producto> pagina = new Pagina<Producto>();
+		final Pagina<Producto> pagina = new Pagina<Producto>();
 		
-		Page<ProductoDTO> page = this.productopageableRepository.findAll(PageRequest.of(numeroPagina, numeroElementos));
+		final Page<ProductoDTO> page = this.productopageableRepository.findAll(PageRequest.of(numeroPagina, numeroElementos));
 		
 		
-		List<Producto> cosas = pagina.getElementos();
+		List<Producto> elementos = page.getContent().stream()
+				.map(x -> this.dozerBeanMapper.map(x, Producto.class))
+				.collect(Collectors.toList());
 		
-		//TODO
 		
+		pagina.setElementos(elementos);
+		
+		pagina.setNumeroTotalElementos(page.getTotalElements());
+		pagina.setNumeroPagina(page.getNumber());
+		pagina.setNumeroElementos(page.getSize());
+		
+		
+		pagina.setPrimeraPagina(page.isFirst());
+		pagina.setUltimaPagina(page.isLast());
 		
 		return pagina;
 	}
