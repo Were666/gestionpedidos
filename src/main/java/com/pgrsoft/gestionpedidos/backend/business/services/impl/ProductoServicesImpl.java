@@ -9,7 +9,6 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Categoria;
@@ -61,15 +60,40 @@ public class ProductoServicesImpl implements ProductoServices {
 	}
 
 	@Override
-	public Pagina<Producto> getPagina(int numeroPagina, int numeroElementos) {
+	public Pagina<Producto> getPagina(int numeroPagina, 
+									  int numeroElementos) {
+		final Page<ProductoDTO> page = productopageableRepository.findAll(PageRequest.of(numeroPagina, numeroElementos));
+		return this.getPagina(page);
+	}
+
+	@Override
+	public Pagina<Producto> getByCategoriaPrecioMenor(Categoria cat, double precio, int numeroPagina,int numeroElementos) throws Exception {
 		
-		final Pagina<Producto> pagina = new Pagina<Producto>();
+		CategoriaDTO categoriaDTO = dozerBeanMapper.map(cat,CategoriaDTO.class);
 		
-		final Page<ProductoDTO> page = this.productopageableRepository.findAll(PageRequest.of(numeroPagina, numeroElementos));
+		Page<ProductoDTO> page = productopageableRepository.findByCategoriaOrPrecioLessThan(
+				categoriaDTO, 
+				precio,
+				PageRequest.of(numeroPagina, numeroElementos));
 		
+		return this.getPagina(page);
+	}
+	
+	
+	/*
+	 * 
+	 * Método privado
+	 * 
+	 * convierte una Page<ProductoDTO> a Pagina<Producto>
+	 * 
+	 */
+	
+	private Pagina<Producto> getPagina (Page<ProductoDTO> page){
+		
+		Pagina<Producto> pagina = new Pagina<Producto>();
 		
 		List<Producto> elementos = page.getContent().stream()
-				.map(x -> this.dozerBeanMapper.map(x, Producto.class))
+				.map(x -> dozerBeanMapper.map(x, Producto.class))
 				.collect(Collectors.toList());
 		
 		pagina.setElementos(elementos);
@@ -81,24 +105,6 @@ public class ProductoServicesImpl implements ProductoServices {
 		
 		pagina.setPrimeraPagina(page.isFirst());
 		pagina.setUltimaPagina(page.isLast());
-		
-		return pagina;
-	}
-
-	@Override
-	public Pagina<Producto> getByCategoriaPrecioMenor(Categoria cat, double precio, int numeroPagina,
-			int numeroElementos) throws Exception {
-		
-		CategoriaDTO cate = this.dozerBeanMapper.map(cat,CategoriaDTO.class);
-		
-		Page<ProductoDTO> page = productopageableRepository.findByCategoriaOrPrecioLessThan(
-				cate, 
-				precio,
-				PageRequest.of(numeroPagina, numeroElementos));
-		
-		Pagina pagina = new Pagina();
-		
-		//TODO after break....
 		
 		return pagina;
 	}
