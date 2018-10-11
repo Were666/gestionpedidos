@@ -2,6 +2,7 @@ package com.pgrsoft.gestionpedidos.pdfgenerator;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 
 import org.springframework.stereotype.Component;
 
@@ -20,21 +21,30 @@ import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 @Component
 public class PedidoPdfGenerator {
 
+	private SimpleDateFormat sdfF = new SimpleDateFormat("dd/MM/yyyy");
+	private SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+	
 	public void generarPDFPedido(PedidoVO pedidoVO) {
 		
+	//	Font blueFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, new CMYKColor(255, 0, 0, 0));
+	//	Font negrita = FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD);
+	
 		Document document = new Document();
 		
 		try {
 			PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("pedidos_pdf/pedido_" + pedidoVO.getId() + ".pdf"));
 			document.open();
+		
+		//	document.add(new Paragraph("Número de pedido: " + pedidoVO.getId(), negrita));
 			document.add(new Paragraph("Número de pedido: " + pedidoVO.getId()));
+			document.add(new Paragraph("Fecha: " + sdfF.format(pedidoVO.getFecha())));
+			document.add(new Paragraph("Hora: " + sdfH.format(pedidoVO.getFecha())));
 			document.add(new Paragraph("Camarero: " + pedidoVO.getCamarero().getNombre()));
 			document.add(new Paragraph("Mesa: " + pedidoVO.getMesa()));
 			
-			
 			PdfPTable table = new PdfPTable(5); // 5 columns.
 			table.setWidthPercentage(100); //Width 100%
-			table.setSpacingBefore(10f); //Space before table
+			table.setSpacingBefore(15f); //Space before table
 			table.setSpacingAfter(10f); //Space after table
 			
 			//Set Column widths
@@ -49,14 +59,15 @@ public class PedidoPdfGenerator {
 	        
 	        cell1.setPaddingLeft(10);
 	        cell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        cell2.setHorizontalAlignment(Element.ALIGN_CENTER);
 	        cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	        
+/*	        
 	        cell1.setBorderColor(BaseColor.LIGHT_GRAY);
 	        cell2.setBorderColor(BaseColor.LIGHT_GRAY);
 	        cell3.setBorderColor(BaseColor.LIGHT_GRAY);
 	        cell4.setBorderColor(BaseColor.LIGHT_GRAY);
 	        cell5.setBorderColor(BaseColor.LIGHT_GRAY);
-	        
+*/	        
 	        cell1.setBackgroundColor(BaseColor.LIGHT_GRAY);
 	        cell2.setBackgroundColor(BaseColor.LIGHT_GRAY);
 	        cell3.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -75,7 +86,7 @@ public class PedidoPdfGenerator {
 	        	PdfPCell c3 = new PdfPCell(new Paragraph(String.valueOf(lp.getCantidad())));
 	        	PdfPCell c4 = new PdfPCell(new Paragraph(String.valueOf(lp.getPrecio())));
 	        	PdfPCell c5 = new PdfPCell(new Paragraph(String.valueOf(lp.getCantidad() * lp.getPrecio())));
-	        	c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+	        	c1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	c2.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	c3.setHorizontalAlignment(Element.ALIGN_RIGHT);
 	        	c4.setHorizontalAlignment(Element.ALIGN_RIGHT);
