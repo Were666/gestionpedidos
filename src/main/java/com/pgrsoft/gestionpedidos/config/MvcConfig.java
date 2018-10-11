@@ -16,7 +16,16 @@ public class MvcConfig implements WebMvcConfigurer {
 	      .addResourceLocations("file:///C:/users/sinensia/opt/files/");
 	    
 	      // localhost:8080/api/files/loquesea.jpg 
+	      // funcionará si en c: existe una carpeta opt con una subcarpeta files con loquesea.jpg!
 	    
-	      // funcionará si en c: existe una carpeta opt con una subcarpeta files con loquesea.jpg!  
-	 }
+	     registry
+	     	.addResourceHandler("swagger-ui.html")
+	        .addResourceLocations("classpath:/META-INF/resources/");
+	 
+	     registry
+	     	.addResourceHandler("/webjars/**")
+	        .addResourceLocations("classpath:/META-INF/resources/webjars/");
+	  }
+	    
+	 
 }
