@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AudioController {
 
-	@RequestMapping("/sonido")
+	@RequestMapping("/david")
 	public String play() {
 		
+		String respuesta = "hola";
 		
 		try {
 			Clip clip = AudioSystem.getClip();
@@ -32,19 +33,19 @@ public class AudioController {
 			
 		} catch (LineUnavailableException e) {
 			
-			e.printStackTrace();
+			respuesta = e.getMessage();
 			
 		} catch (UnsupportedAudioFileException e) {
 			
-			e.printStackTrace();
+			respuesta = e.getMessage();
 			
 		} catch (IOException e) {
 			
-			e.printStackTrace();
+			respuesta = e.getMessage();
 		}
 		
 		
-		return "sonido";
+		return respuesta;
 	}
 	
 }
