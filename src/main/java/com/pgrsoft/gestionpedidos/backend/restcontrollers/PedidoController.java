@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
+import com.pgrsoft.gestionpedidos.pdfgenerator.PedidoPdfGenerator;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -19,6 +20,9 @@ public class PedidoController {
 	
 	@Autowired
 	private PedidoPresentationServices pedidoPresentationServices;
+	
+	@Autowired
+	private PedidoPdfGenerator pedidoPdfGenerator;
 	
 	// 	*****************************************************************************
 	//	GET BY ID
@@ -33,6 +37,9 @@ public class PedidoController {
 		
 		try {
 			pedido = pedidoPresentationServices.getById(id);
+			
+			pedidoPdfGenerator.generarPDFPedido(pedido);
+			
 		} catch (Exception e) {
 			//logger.error(e.getMessage());
 			//TODO
