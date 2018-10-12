@@ -98,10 +98,16 @@ public class PedidoController {
 	
 	@RequestMapping(value="/{id}/pdf",
 					method=RequestMethod.GET,
-					produces=MediaType.APPLICATION_JSON_VALUE)
-	public ModelAndView getPDF(@PathVariable ("id") Long id) throws Exception {
+					produces=MediaType.APPLICATION_PDF_VALUE)
+	public ModelAndView getPDF(@PathVariable ("id") Long id)  {
 
-		PedidoVO pedidoVO = this.pedidoPresentationServices.getById(id);
+		PedidoVO pedidoVO = null;
+		
+		try {
+			pedidoVO = this.pedidoPresentationServices.getById(id);
+		} catch (Exception e) {
+			// e.printStackTrace();
+		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pedido", pedidoVO);

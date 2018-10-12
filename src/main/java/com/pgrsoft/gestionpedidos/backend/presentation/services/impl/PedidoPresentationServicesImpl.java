@@ -83,7 +83,4 @@ public class PedidoPresentationServicesImpl implements PedidoPresentationService
 				.map(x -> dozerBeanMapper.map(x, LineaPedidoVO.class))
 				.collect(Collectors.toList());
 	}
-
-
-
 }
