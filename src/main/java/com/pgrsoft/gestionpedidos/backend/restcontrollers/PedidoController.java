@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pgrsoft.gestionpedidos.backend.presentation.model.PedidoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.PedidoPresentationServices;
-import com.pgrsoft.gestionpedidos.pdfgenerator.PedidoPdfGenerator;
+import com.pgrsoft.gestionpedidos.pdfviews.PedidoPdfView;
 
 @RestController
 @RequestMapping("/pedidos")
@@ -22,7 +23,7 @@ public class PedidoController {
 	private PedidoPresentationServices pedidoPresentationServices;
 	
 	@Autowired
-	private PedidoPdfGenerator pedidoPdfGenerator;
+	private PedidoPdfView pedidoPdfGenerator;
 	
 	// 	*****************************************************************************
 	//	GET BY ID
@@ -37,9 +38,7 @@ public class PedidoController {
 		
 		try {
 			pedido = pedidoPresentationServices.getById(id);
-			
-			pedidoPdfGenerator.generarPDFPedido(pedido);
-			
+		
 		} catch (Exception e) {
 			//logger.error(e.getMessage());
 			//TODO
@@ -91,6 +90,24 @@ public class PedidoController {
 		}
 		
 		return createdPedidoVO;
+	}
+	
+	// 	*****************************************************************************
+	//	GET PDF
+	// 	*****************************************************************************
+	
+	@RequestMapping(value="/{id}/pdf",
+					method=RequestMethod.GET,
+					produces=MediaType.APPLICATION_JSON_VALUE)
+	public ModelAndView getPDF(@PathVariable ("id") Long id) throws Exception {
+
+		PedidoVO pedidoVO = this.pedidoPresentationServices.getById(id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pedido", pedidoVO);
+		
+		mav.setView(pedidoPdfGenerator);
+		return mav;
 	}
 
 }
