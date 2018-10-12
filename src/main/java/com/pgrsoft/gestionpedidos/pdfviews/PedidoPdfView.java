@@ -2,6 +2,7 @@ package com.pgrsoft.gestionpedidos.pdfviews;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class PedidoPdfView extends  AbstractView {
 
 	private SimpleDateFormat sdfF = new SimpleDateFormat("dd/MM/yyyy");
 	private SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
-	private NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+	private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.GERMAN);
 	
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
