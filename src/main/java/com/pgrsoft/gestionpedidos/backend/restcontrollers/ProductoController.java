@@ -1,17 +1,23 @@
 package com.pgrsoft.gestionpedidos.backend.restcontrollers;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.ProductoVO;
 import com.pgrsoft.gestionpedidos.backend.presentation.services.ProductoPresentationServices;
+import com.pgrsoft.gestionpedidos.pdfviews.ProductoPdfView;
 
 @RestController
 @RequestMapping(value="/productos")
@@ -22,11 +28,13 @@ public class ProductoController {
 	@Autowired
 	private ProductoPresentationServices productoPresentationServices;
 	
+	@Autowired
+	private ProductoPdfView productoPdfView;
+	
 	
 	@GetMapping(value="")
 	public Pagina<ProductoVO> getPaginated(@RequestParam("page") Integer numeroPagina,
 										   @RequestParam("size") Integer numeroElementos){
-		
 		
 		Pagina<ProductoVO> pagina = null;
 		
@@ -54,7 +62,32 @@ public class ProductoController {
 		}
 		
 		return producto;
+	}
 	
+	// 	*****************************************************************************
+	//	GET PDF
+	// 	*****************************************************************************
+		
+	
+	@RequestMapping(value="/pdf",
+					method=RequestMethod.GET,
+					produces=MediaType.APPLICATION_PDF_VALUE)
+	public ModelAndView getPDF() {
+		
+		List<ProductoVO> productos = null;
+		
+		try {
+			productos = this.productoPresentationServices.getAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("productos", productos);
+		
+		mav.setView(productoPdfView);
+		
+		return mav;
 	}
 
 }

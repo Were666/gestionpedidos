@@ -23,7 +23,7 @@ public class PedidoController {
 	private PedidoPresentationServices pedidoPresentationServices;
 	
 	@Autowired
-	private PedidoPdfView pedidoPdfGenerator;
+	private PedidoPdfView pedidoPdfView;
 	
 	// 	*****************************************************************************
 	//	GET BY ID
@@ -106,13 +106,13 @@ public class PedidoController {
 		try {
 			pedidoVO = this.pedidoPresentationServices.getById(id);
 		} catch (Exception e) {
-			// e.printStackTrace();
+			e.printStackTrace();
 		}
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pedido", pedidoVO);
 		
-		mav.setView(pedidoPdfGenerator);
+		mav.setView(pedidoPdfView);
 		return mav;
 	}
 
