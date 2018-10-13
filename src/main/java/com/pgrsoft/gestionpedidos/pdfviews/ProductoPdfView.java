@@ -58,51 +58,63 @@ public class ProductoPdfView extends  AbstractView {
 	    pdfDocument.add(title);
 	    
 	
-	    Table table = new Table(new float[]{5f,40f, 5f,5f,5f});
+	    Table table = new Table(new float[]{5f,40f, 5f,5f,5f,5f});
 	    table
 	    	.setWidth(UnitValue.createPercentValue(100))
 	    	.setTextAlignment(TextAlignment.CENTER);
 	    	
-	    Cell h1 = new Cell().add(new Paragraph("Código"));
-	    Cell h2 = new Cell().add(new Paragraph("Producto"));
-	    Cell h4 = new Cell().add(new Paragraph("Descripción"));
-	    Cell h5 = new Cell().add(new Paragraph("Precio"));
-	    Cell h6 = new Cell().add(new Paragraph("Descatalogado"));
+	    Cell h1 = new Cell().add("Código");
+	    Cell h2 = new Cell().add("Familia");
+	    Cell h3 = new Cell().add("Producto");
+	    Cell h4 = new Cell().add("Descripción");
+	    Cell h5 = new Cell().add("Precio");
+	    Cell h6 = new Cell().add("Estado");
 	    
 	    h1.setFontColor(Color.WHITE);
 	    h2.setFontColor(Color.WHITE);
+	    h3.setFontColor(Color.WHITE);
 	    h4.setFontColor(Color.WHITE);
 	    h5.setFontColor(Color.WHITE);
 	    h6.setFontColor(Color.WHITE);
 	    
 	    h1.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
 	    h2.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
+	    h3.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
 	    h4.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
 	    h5.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
 	    h6.setBackgroundColor(Color.BLACK).setTextAlignment(TextAlignment.CENTER);
-	    
+
 	    table.addHeaderCell(h1);
 	    table.addHeaderCell(h2);
+	    table.addHeaderCell(h3);
 	    table.addHeaderCell(h4);
 	    table.addHeaderCell(h5);
 	    table.addHeaderCell(h6);
 	   
 	    for(ProductoVO producto: productos) {
-	    	Cell cCodigo = new Cell().add(new Paragraph(formatoCodigo.format(producto.getCodigo())));
-	    	Cell cProducto = new Cell().add(new Paragraph(producto.getNombre()));
-	    	Cell cCantidad = new Cell().add(new Paragraph(producto.getDescripcion()));
-	    	Cell cPrecio = new Cell().add(new Paragraph(formatoImporte.format(producto.getPrecio()) + " €"));
-	    	Cell cTotal = new Cell().add(new Paragraph(String.valueOf(producto.isDescatalogado())));
+	    	Cell cCodigo = new Cell().add(formatoCodigo.format(producto.getCodigo()));
+	    	Cell cFamilia = new Cell().add(producto.getCategoria().toString());
+	    	Cell cProducto = new Cell().add(producto.getNombre());
+	    	Cell cDescripcion = new Cell().add(producto.getDescripcion());
+	    	Cell cPrecio = new Cell().add(formatoImporte.format(producto.getPrecio()) + " €");
+	    	
+	    	String strDescatalogado = producto.isDescatalogado() ? "descatalogado" : "";
+	    	
+	    	Cell cDescatalogado = new Cell().add(strDescatalogado);
 	    	
 	    	cCodigo.setTextAlignment(TextAlignment.CENTER);
+	    	cFamilia.setTextAlignment(TextAlignment.CENTER);
 	    	cProducto.setTextAlignment(TextAlignment.LEFT);
+	    	cDescripcion.setTextAlignment(TextAlignment.LEFT);
+	    	cDescatalogado.setTextAlignment(TextAlignment.CENTER);
+	    	cDescatalogado.setFontColor(Color.RED);
 	    	
 	    	table.addCell(cCodigo);
+	    	table.addCell(cFamilia);
 	    	table.addCell(cProducto);
-	    	table.addCell(cCantidad).setTextAlignment(TextAlignment.RIGHT);
+	    	table.addCell(cDescripcion);
 	    	table.addCell(cPrecio).setTextAlignment(TextAlignment.RIGHT);
-	    	table.addCell(cTotal).setTextAlignment(TextAlignment.RIGHT);
-	    
+	    	table.addCell(cDescatalogado);
 	    }
 	    
 	    pdfDocument.add(table);
