@@ -34,27 +34,35 @@ INSERT INTO PRODUCTOS VALUES
 (19,'Estrella Damm', 1.80, 'Cerveza rubia 5,0%','2015-10-20 00:00:00',false,'CERVEZA'),
 (20,'Estrella Galicia', 1.80, 'Cerveza rubia 4,9%','2015-10-20 00:00:00',false,'CERVEZA'),
 
-(21,'Producto 21', 8.00, 'Descripción Producto 21','2015-10-20 00:00:00',false,'COMIDA'),
-(22,'Producto 22', 8.00, 'Descripción Producto 22','2015-10-20 00:00:00',false,'COMIDA'),
-(23,'Producto 23', 8.00, 'Descripción Producto 23','2015-10-20 00:00:00',false,'COMIDA'),
-(24,'Producto 24', 8.00, 'Descripción Producto 24','2015-10-20 00:00:00',false,'COMIDA'),
-(25,'Producto 25', 8.00, 'Descripción Producto 25','2015-10-20 00:00:00',false,'COMIDA'),
-(26,'Producto 26', 8.00, 'Descripción Producto 26','2015-10-20 00:00:00',false,'COMIDA'),
-(27,'Producto 27', 8.00, 'Descripción Producto 27','2015-10-20 00:00:00',false,'COMIDA'),
-(28,'Producto 28', 8.00, 'Descripción Producto 28','2015-10-20 00:00:00',false,'COMIDA'),
-(29,'Producto 29', 8.00, 'Descripción Producto 29','2015-10-20 00:00:00',false,'COMIDA'),
-(30,'Producto 30', 8.00, 'Descripción Producto 30','2015-10-20 00:00:00',false,'COMIDA'),
-(31,'Producto 31', 8.00, 'Descripción Producto 31','2015-10-20 00:00:00',true,'COMIDA'),
-(32,'Producto 32', 8.00, 'Descripción Producto 32','2015-10-20 00:00:00',false,'COMIDA'),
-(33,'Producto 33', 8.00, 'Descripción Producto 33','2015-10-20 00:00:00',false,'COMIDA'),
-(34,'Producto 34', 8.00, 'Descripción Producto 34','2015-10-20 00:00:00',false,'COMIDA'),
-(35,'Producto 35', 8.00, 'Descripción Producto 35','2015-10-20 00:00:00',false,'COMIDA'),
-(36,'Producto 36', 8.00, 'Descripción Producto 36','2015-10-20 00:00:00',false,'COMIDA'),
-(37,'Producto 37', 8.00, 'Descripción Producto 37','2015-10-20 00:00:00',true,'COMIDA'),
-(38,'Producto 38', 8.00, 'Descripción Producto 38','2015-10-20 00:00:00',false,'COMIDA'),
-(39,'Producto 39', 8.00, 'Descripción Producto 39','2015-10-20 00:00:00',false,'COMIDA'),
-(40,'Producto 40', 8.00, 'Descripción Producto 40','2015-10-20 00:00:00',false,'COMIDA'),
-(41,'Producto 41', 8.00, 'Descripción Producto 41','2015-10-20 00:00:00',false,'COMIDA');
+(21,'Tortilla de Patata', 5.50, 'Ración de tortilla de patata','2015-10-20 00:00:00',false,'TAPA'),
+(22,'Ensaladilla Rusa', 4.00, 'Ensaladilla rusa','2015-10-20 00:00:00',false,'TAPA'),
+(23,'Gambas al Ajillo', 6.20, 'Ración de gambas al ajillo','2015-10-20 00:00:00',false,'TAPA'),
+(24,'Paella', 24.00, 'Paella valenciana (mínimo dos personas)','2015-10-20 00:00:00',false,'COMIDA'),
+(25,'Arroz Negro', 14.00, 'Arroz negro con gambas','2015-10-20 00:00:00',false,'COMIDA'),
+(26,'Melón', 2.70, 'Melón','2015-10-20 00:00:00',false,'POSTRE'),
+(27,'Flan', 3.10, 'Flan de huevo Fageda','2015-10-20 00:00:00',false,'POSTRE'),
+(28,'Helado de Fresa', 3.20, 'Tarrina de Helado de Fresa Frigo','2015-10-20 00:00:00',false,'POSTRE'),
+(29,'Helado de Vainilla y Chocolate', 3.20, 'Tarrina de helado vainilla/chocolate Frigo','2015-10-20 00:00:00',false,'POSTRE'),
+(30,'Sorbete de Limón', 3.20, 'Sorbete de Limón Frigo','2015-10-20 00:00:00',false,'POSTRE'),
+
+(31,'Agua 33cl Fotvella', 1.00, 'Botellín plástico agua Fontvella 33cl','2015-10-20 00:00:00',true,'AGUA'),
+(32,'Agua 1L Fontvella', 2.00, 'Botella plástico agua Fontvella 1L','2015-10-20 00:00:00',false,'AGUA'),
+(33,'Agua 1L Solan de Cabras', 2.20, 'Botella 1L agua Solan de Cabras','2015-10-20 00:00:00',false,'AGUA'),
+(34,'Agua Vichy Catalán 33cl', 2.60, 'Botella agua con gas Vichy Catalán 33cl','2015-10-20 00:00:00',false,'AGUA'),
+(35,'Tabla Jamón Ibérico', 16.00, 'Tabla 250gr jamón ibérico','2015-10-20 00:00:00',false,'TAPA'),
+(36,'Tabla variada de Quesos', 12.00, 'Tabla de 250gr de quesos variados','2015-10-20 00:00:00',false,'TAPA'),
+
+(37,'Ensalada Verde', 7.00, 'Ensalada de lechuga, tomate, cebollas y olivas','2015-10-20 00:00:00',true,'COMIDA'),
+(38,'Ensalada de Pasta', 8.00, 'Ensalada de espirales con tomate, orégano, atún y tomate','2015-10-20 00:00:00',false,'COMIDA'),
+(39,'Enssalada Mixta', 8.00, 'Ensalada con lechuga y embutido','2015-10-20 00:00:00',false,'COMIDA'),
+
+(40,'Copa de Torres 5', 3.60, 'Copa de brandy Torres 5','2015-10-20 00:00:00',false,'LICOR'),
+(41,'Copa de Cutty Sark', 3.60, 'Copa de whisky Cutty Sark','2015-10-20 00:00:00',false,'LICOR'),
+(42,'Esparragos a la Plancha', 8.50, 'Espárragos a la plancha','2015-10-20 00:00:00',false,'COMIDA'),
+(43,'Tarta de Santiago', 4.20, 'Tarta de Santiago, 150gr','2015-10-20 00:00:00',false,'POSTRE'),
+(44,'Tarta de Queso', 4.10, 'Tarta de Queso, 150gr','2015-10-20 00:00:00',false,'POSTRE'),
+(45,'café descafeinado', 1.30, 'Café descafeinado','2015-10-20 00:00:00',false,'CAFE');
+
 
 INSERT INTO PEDIDOS VALUES
 (1,'2018-10-20 17:22:14',10,100),
@@ -111,10 +119,18 @@ INSERT INTO LINEAS_PEDIDO (ID_PEDIDO, INDICE, ID_PRODUCTO,CANTIDAD,PRECIO) VALUE
 (7,8,18,1,2.10),
 (7,9,20,2,1.80),
 (7,10,1,4,1.20),
-(7,11,3,1,1.30);
+(7,11,3,1,1.30),
 
+(8,0,16,1,11.20),
+(8,1,31,1,1),
+(8,2,45,1,1.30),
 
+(9,0,37,1,7),
+(9,1,15,1,8),
+(9,2,41,1,6),
+(9,3,1,1,1.20),
 
+(10,0,1,1,1.20);
 
 
 

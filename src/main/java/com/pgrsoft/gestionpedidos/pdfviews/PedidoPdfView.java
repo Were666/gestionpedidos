@@ -96,7 +96,7 @@ public class PedidoPdfView extends  AbstractView {
 	    
 	    pdfDocument.add(headerTable);
 	    
-	    Table table = new Table(new float[]{5f,40f, 5f,5f,5f});
+	    Table table = new Table(new float[]{5f,40f,5f,5f,5f});
 	    table
 	    	.setWidth(UnitValue.createPercentValue(100))
 	    	.setTextAlignment(TextAlignment.CENTER);
