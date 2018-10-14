@@ -24,8 +24,6 @@ public class AudioController {
 	@RequestMapping("/sintetizador")
 	public String sintetizarVoz() {
 		
-	
-		
 		return "sintetizador de voz";
 	}
 

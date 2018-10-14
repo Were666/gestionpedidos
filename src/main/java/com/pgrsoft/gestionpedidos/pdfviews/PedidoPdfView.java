@@ -11,15 +11,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.view.AbstractView;
 
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.image.ImageType;
 import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.border.Border;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import com.pgrsoft.gestionpedidos.backend.presentation.model.LineaPedidoVO;
@@ -43,14 +49,56 @@ public class PedidoPdfView extends  AbstractView {
 		
 		PdfWriter pdfWriter = new PdfWriter(response.getOutputStream());
 		PdfDocument pdf = new PdfDocument(pdfWriter);
-		Document pdfDocument = new Document(pdf);
+		Document document = new Document(pdf);
+		
+		// Creating an ImageData object 
+		String imageFile = "classpath:pollos_hermanos_logo.png"; 
+		ImageData data = ImageDataFactory.create(imageFile);
+	    
+		// Creating an Image object 
+		Image img = new Image(data);
+		img.setWidth(110);
+		img.setHeight(110);
+		img.setHorizontalAlignment(HorizontalAlignment.RIGHT);
+		
+		// Adding image to the document 
+		//document.add(img);
+		
+		//header de pedido
+	    Table cabecera = new Table(new float[]{300f,20f});
+		
+	    Cell col1 = new Cell();
+	    Cell col2 = new Cell();
+	    
+	    col1.add(new Paragraph("Pollo LoKo, S.L."));
+	    col1.add(new Paragraph("B-46228951"));
+	    col1.add(new Paragraph("Avda Industria, 240 Edificio A"));
+	    col1.add(new Paragraph("Santa Perpetua de Mogoda - 08020 - Barcelona"));
+	    col1.add(new Paragraph(" "));
+	    col1.add(new Paragraph("Telf. +34 932205050"));
+	    col1.add(new Paragraph("Email admin@polloloko.com"));
+	    
+	    col2.add(img);
+	    
+	    col1.setBorder(Border.NO_BORDER);
+	    col2.setBorder(Border.NO_BORDER);
+	    
+	    col1.setFontSize(10f);
+	  
+	    cabecera.addCell(col1);
+	    cabecera.addCell(col2);
+		
+	    cabecera.setWidth(UnitValue.createPercentValue(100));
+	    cabecera.setMarginBottom(35);
+	    
+	    document.add(cabecera);
 		
 		//title
 		Paragraph title = new Paragraph("Hoja de Pedido ");
 		title.setFont(PdfFontFactory.createFont(FontConstants.HELVETICA));
 	    title.setFontSize(18f);
 	    title.setMarginBottom(30f);
-	    pdfDocument.add(title);
+	    document.add(title);
 	    
 	    //header de pedido
 	    Table headerTable = new Table(new float[]{20f,20f});
@@ -94,7 +142,7 @@ public class PedidoPdfView extends  AbstractView {
 	    
 	    headerTable.setMarginBottom(30f);
 	    
-	    pdfDocument.add(headerTable);
+	    document.add(headerTable);
 	    
 	    Table table = new Table(new float[]{5f,40f,5f,5f,5f});
 	    table
@@ -143,8 +191,8 @@ public class PedidoPdfView extends  AbstractView {
 	    
 	    }
 	    
-	    pdfDocument.add(table);
-	    pdfDocument.close();
+	    document.add(table);
+	    document.close();
 	 	
 	}
 	
