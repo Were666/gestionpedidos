@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoPageableRepository;
 
 @RestController
+@CrossOrigin
 public class PruebasController {
 
 	@Autowired
