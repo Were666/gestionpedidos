@@ -23,6 +23,7 @@ import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.impl.ProductoServicesImpl;
 import com.pgrsoft.gestionpedidos.backend.integration.model.CategoriaDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
+import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoPageableRepository;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoRepository;
 
 @RunWith(SpringRunner.class)
@@ -46,12 +47,14 @@ public class ProductoServicesTest {
 		}
 	}
 	
-	
 	@Autowired
 	private ProductoServices productoServices;
 	
 	@MockBean
 	private ProductoRepository productoRepository;
+	
+	@MockBean
+	private ProductoPageableRepository productoPageableRepository;
 	
 	@Before
 	public void setUp() {
@@ -65,7 +68,7 @@ public class ProductoServicesTest {
 		producto.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
 		producto.setFechaAlta(new Date());
 		producto.setPrecio(100.0);
-		producto.setCategoria(CategoriaDTO.AGUA);
+		producto.setCategoria(CategoriaDTO.COMIDA);
 		producto.setDescatalogado(true);
 		
 		Mockito.when(productoRepository.getOne(100000L))
