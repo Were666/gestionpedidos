@@ -8,4 +8,6 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 @Repository
 public interface CamareroRepository extends JpaRepository<CamareroDTO,Long>{
 
+	public CamareroDTO findByNombre (String nombre);
+	
 }
