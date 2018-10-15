@@ -2,6 +2,10 @@ package com.pgrsoft.gestionpedidos.backend.business.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.dozer.DozerBeanMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Camarero;
@@ -18,11 +23,9 @@ import com.pgrsoft.gestionpedidos.backend.integration.model.CamareroDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.CamareroRepository;
 
 @RunWith(SpringRunner.class)
+@ContextConfiguration
 public class CamareroServicesTest {
 
-	//TODO Arreglar tema dozer
-	
-	//Necesitamos configurar algunas cosas...
 	@TestConfiguration
 	static class CamareroSericeTestContextConfiguration{
 		
@@ -30,6 +33,15 @@ public class CamareroServicesTest {
 		public CamareroServices camareroService() {
 			return new CamareroServicesImpl();		// Implementación que vamos a testear
 		}	
+		
+		@Bean
+		public DozerBeanMapper getMapper() {
+			List<String> mappingFiles = Arrays.asList("dozer-configration-mapping.xml");
+	        DozerBeanMapper dozerBean = new DozerBeanMapper();
+	        dozerBean.setMappingFiles(mappingFiles);
+	        return dozerBean;
+		}
+		
 	}
 	
 	@Autowired
@@ -40,6 +52,7 @@ public class CamareroServicesTest {
 	
 	@Before
 	public void setUp() {
+		
 		CamareroDTO camarero = new CamareroDTO();
 		camarero.setId(1000L);
 		camarero.setNombre("CAMARERO TESTING");
@@ -61,6 +74,5 @@ public class CamareroServicesTest {
 		assertThat(encontrado.getNombre()).isEqualTo(nombre);
 	}
 	
-	
-	
+		
 }
