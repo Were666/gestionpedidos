@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.pgrsoft.gestionpedidos.backend.business.model.Categoria;
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.impl.ProductoServicesImpl;
 import com.pgrsoft.gestionpedidos.backend.integration.model.CategoriaDTO;
@@ -101,6 +102,9 @@ public class ProductoServicesTest {
 				.thenReturn(Arrays.asList(producto1, producto2, producto3));
 		
 	
+        Mockito.when(productoRepository.save(producto1))
+        		.thenReturn(producto1);
+		
 	}
 	
 	@Test
@@ -119,7 +123,22 @@ public class ProductoServicesTest {
 	
 	@Test
 	public void whenCreate() throws Exception {
-		// TODO! ¿Cómo se prueba?
+		
+		Producto productoNuevo = new Producto();
+		
+		productoNuevo.setCodigo(100000L);
+		productoNuevo.setNombre("PRODUCTO DE TEST");
+		productoNuevo.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
+		productoNuevo.setFechaAlta(new Date());
+		productoNuevo.setPrecio(100.0);
+		productoNuevo.setCategoria(Categoria.COMIDA);
+		productoNuevo.setDescatalogado(true);
+		
+		Producto productoCreado = productoServices.create(productoNuevo);
+		
+		assertThat(productoCreado.getCodigo()).isEqualTo(productoNuevo.getCodigo());
+		assertThat(productoCreado.toString()).isEqualTo(productoNuevo.toString());
+		
 	}
 	
 	
