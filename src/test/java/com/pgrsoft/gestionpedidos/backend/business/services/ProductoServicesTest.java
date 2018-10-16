@@ -16,12 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pgrsoft.gestionpedidos.backend.business.model.Categoria;
 import com.pgrsoft.gestionpedidos.backend.business.model.Producto;
 import com.pgrsoft.gestionpedidos.backend.business.services.impl.ProductoServicesImpl;
+import com.pgrsoft.gestionpedidos.backend.common.Pagina;
 import com.pgrsoft.gestionpedidos.backend.integration.model.CategoriaDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.model.ProductoDTO;
 import com.pgrsoft.gestionpedidos.backend.integration.repositories.ProductoPageableRepository;
@@ -60,84 +65,78 @@ public class ProductoServicesTest {
 	@Before
 	public void setUp() {
 		
-		// Configuramos un producto de pruebas...
+		// Configuramos varios productos de pruebas...
 		
-		ProductoDTO producto1 = new ProductoDTO();
-		
-		producto1.setCodigo(100000L);
-		producto1.setNombre("PRODUCTO DE TEST");
-		producto1.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
-		producto1.setFechaAlta(new Date());
-		producto1.setPrecio(100.0);
-		producto1.setCategoria(CategoriaDTO.COMIDA);
-		producto1.setDescatalogado(true);
-		
-		ProductoDTO producto2 = new ProductoDTO();
-		
-		producto2.setCodigo(200000L);
-		producto2.setNombre("PRODUCTO DE TEST 2");
-		producto2.setDescripcion("DESCRIPCION PRODUCTO DE TEST 2");
-		producto2.setFechaAlta(new Date());
-		producto2.setPrecio(100.0);
-		producto2.setCategoria(CategoriaDTO.COMIDA);
-		producto2.setDescatalogado(true);
-		
-		ProductoDTO producto3 = new ProductoDTO();
-		
-		producto3.setCodigo(300000L);
-		producto3.setNombre("PRODUCTO DE TEST 3");
-		producto3.setDescripcion("DESCRIPCION PRODUCTO DE TEST 3");
-		producto3.setFechaAlta(new Date());
-		producto3.setPrecio(100.0);
-		producto3.setCategoria(CategoriaDTO.COMIDA);
-		producto3.setDescatalogado(true);
-		
-		
-		// Programamos nuestro objeto mock
-		
-		Mockito.when(productoRepository.getOne(100000L))
-		       .thenReturn(producto1);
-		
-		Mockito.when(productoRepository.findAll())
-				.thenReturn(Arrays.asList(producto1, producto2, producto3));
+		ProductoDTO p1 = new ProductoDTO(1L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
+		ProductoDTO p2 = new ProductoDTO(2L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
+		ProductoDTO p3 = new ProductoDTO(3L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
+		ProductoDTO p4 = new ProductoDTO(4L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
+		ProductoDTO p5 = new ProductoDTO(5L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
+		ProductoDTO p6 = new ProductoDTO(6L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
 		
 	
-        Mockito.when(productoRepository.save(producto1))
-        		.thenReturn(producto1);
+		// Programamos nuestro objeto mock
+		
+		Mockito.when(productoRepository.getOne(1L))
+		       .thenReturn(p1);
+		
+		Mockito.when(productoRepository.findAll())
+				.thenReturn(Arrays.asList(p1, p2, p3));
+		
+        Mockito.when(productoRepository.save(p1))
+        		.thenReturn(p1);
+        
+        Page<ProductoDTO> page1 = new PageImpl<ProductoDTO>(Arrays.asList(p1,p2,p3));
+        Page<ProductoDTO> page2 = new PageImpl<ProductoDTO>(Arrays.asList(p1,p2));
+        
+        Mockito.when(productoPageableRepository.findAll(PageRequest.of(0, 3)))
+        		.thenReturn(page1);
+        
+        Mockito.when(productoPageableRepository.findAll(PageRequest.of(0, 2)))
+				.thenReturn(page2);
 		
 	}
 	
 	@Test
 	public void whenValidCodigo_thenProductoShouldBeFound() throws Exception {
-		String nombre = "PRODUCTO DE TEST";
-		Producto encontrado = productoServices.getById(100000L);
+		String nombre = "PR. TEST";
+		Producto encontrado = productoServices.getById(1L);
 		assertThat(encontrado.getNombre()).isEqualTo(nombre);
-		assertThat(encontrado.getDescripcion()).isEqualTo("DESCRIPCION PRODUCTO DE TEST");
+		assertThat(encontrado.getDescripcion()).isEqualTo("DESC.");
 	}
 	
 	@Test
 	public void whenGetAll() throws Exception {
-		List<Producto> productos = this.productoServices.getAll();
+		List<Producto> productos = productoServices.getAll();
 		assertThat(productos.size()).isEqualTo(3);
 	}
 	
 	@Test
 	public void whenCreate() throws Exception {
 		
-		Producto productoNuevo = new Producto();
-		
-		productoNuevo.setCodigo(100000L);
-		productoNuevo.setNombre("PRODUCTO DE TEST");
-		productoNuevo.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
-		productoNuevo.setFechaAlta(new Date());
-		productoNuevo.setPrecio(100.0);
-		productoNuevo.setCategoria(Categoria.COMIDA);
-		productoNuevo.setDescatalogado(true);
-		
+		Producto productoNuevo = new Producto(1L,"PR. TEST",1.5,"DESC.",new Date(),false, Categoria.COMIDA);
+	
 		Producto productoCreado = productoServices.create(productoNuevo);
 		
 		assertThat(productoCreado.getCodigo()).isEqualTo(productoNuevo.getCodigo());
-		assertThat(productoCreado.toString()).isEqualTo(productoNuevo.toString());
+		
+	}
+	
+	@Test
+	public void whenGetPagina() throws Exception {
+		
+		Pagina<Producto> pagina = productoServices.getPagina(0, 3);
+		
+		assertThat(pagina.getElementos().size()).isEqualTo(3);
+		
+		pagina = productoServices.getPagina(0, 2);
+		
+		assertThat(pagina.getElementos().size()).isEqualTo(2);
+		
+	}
+	
+	@Test
+	public void whenGetByCategoriaPrecioMenor() {
 		
 	}
 	

@@ -18,6 +18,19 @@ public class Producto implements Serializable {
 	public Producto() {
 		
 	}
+	
+	public Producto(Long codigo, String nombre, double precio, String descripcion, Date fechaAlta,
+			boolean descatalogado, Categoria categoria) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.descripcion = descripcion;
+		this.fechaAlta = fechaAlta;
+		this.descatalogado = descatalogado;
+		this.categoria = categoria;
+	}
+
+
 
 	public Long getCodigo() {
 		return codigo;

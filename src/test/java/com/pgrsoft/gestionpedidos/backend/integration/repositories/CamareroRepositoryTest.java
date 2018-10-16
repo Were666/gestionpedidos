@@ -56,7 +56,7 @@ public class CamareroRepositoryTest {
 		assertThat(camareros.size()).isEqualTo(3);	
 	}
 	
-	@Test
+	
 	public void whenCreate() {
 		
 		//TODO
@@ -80,7 +80,6 @@ public class CamareroRepositoryTest {
 //		List<CamareroDTO> camareros = query.getResultList();
 		
 				
-		camareroRepository.save(new CamareroDTO());
 		
 	}
 	
