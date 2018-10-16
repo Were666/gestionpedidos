@@ -74,7 +74,6 @@ public class ProductoServicesTest {
 		ProductoDTO p5 = new ProductoDTO(5L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
 		ProductoDTO p6 = new ProductoDTO(6L,"PR. TEST",1.5,"DESC.",new Date(),false, CategoriaDTO.COMIDA);
 		
-	
 		// Programamos nuestro objeto mock
 		
 		Mockito.when(productoRepository.getOne(1L))
@@ -83,8 +82,10 @@ public class ProductoServicesTest {
 		Mockito.when(productoRepository.findAll())
 				.thenReturn(Arrays.asList(p1, p2, p3));
 		
-        Mockito.when(productoRepository.save(p1))
-        		.thenReturn(p1);
+        Mockito.when(productoRepository.save(p1)).thenReturn(p1);
+        Mockito.when(productoRepository.save(p2)).thenReturn(p2);
+        Mockito.when(productoRepository.save(p3)).thenReturn(p3);
+        Mockito.when(productoRepository.save(p4)).thenReturn(p4);
         
         Page<ProductoDTO> page1 = new PageImpl<ProductoDTO>(Arrays.asList(p1,p2,p3));
         Page<ProductoDTO> page2 = new PageImpl<ProductoDTO>(Arrays.asList(p1,p2));
@@ -94,7 +95,10 @@ public class ProductoServicesTest {
         
         Mockito.when(productoPageableRepository.findAll(PageRequest.of(0, 2)))
 				.thenReturn(page2);
-		
+        
+        Mockito.when(productoPageableRepository.findByCategoriaOrPrecioLessThan(CategoriaDTO.AGUA, 1000.0, PageRequest.of(0, 2)))
+        		.thenReturn(page2);
+        
 	}
 	
 	@Test
@@ -136,10 +140,15 @@ public class ProductoServicesTest {
 	}
 	
 	@Test
-	public void whenGetByCategoriaPrecioMenor() {
+	public void whenGetByCategoriaPrecioMenor() throws Exception {
 		
+		Categoria categoria = Categoria.AGUA;
+		
+		Pagina<Producto> pagina = this.productoServices.getByCategoriaPrecioMenor(categoria, 4.0, 0, 2)	;
+			
+		assertThat(pagina).isNotNull();
+		
+	
 	}
-	
-	
 	
 }
