@@ -21,7 +21,7 @@ import com.pgrsoft.gestionpedidos.backend.presentation.model.CamareroVO;
 
 //@RunWith(SpringRunner.class)
 //@WebMvcTest(CamareroController.class)
-public class CanareroControllerTest {
+public class CamareroControllerTest {
 
 //	@Autowired
 //	private MockMvc mvc;

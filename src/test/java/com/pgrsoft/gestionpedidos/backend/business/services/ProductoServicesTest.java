@@ -61,19 +61,46 @@ public class ProductoServicesTest {
 		
 		// Configuramos un producto de pruebas...
 		
-		ProductoDTO producto = new ProductoDTO();
+		ProductoDTO producto1 = new ProductoDTO();
 		
-		producto.setCodigo(100000L);
-		producto.setNombre("PRODUCTO DE TEST");
-		producto.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
-		producto.setFechaAlta(new Date());
-		producto.setPrecio(100.0);
-		producto.setCategoria(CategoriaDTO.COMIDA);
-		producto.setDescatalogado(true);
+		producto1.setCodigo(100000L);
+		producto1.setNombre("PRODUCTO DE TEST");
+		producto1.setDescripcion("DESCRIPCION PRODUCTO DE TEST");
+		producto1.setFechaAlta(new Date());
+		producto1.setPrecio(100.0);
+		producto1.setCategoria(CategoriaDTO.COMIDA);
+		producto1.setDescatalogado(true);
+		
+		ProductoDTO producto2 = new ProductoDTO();
+		
+		producto2.setCodigo(200000L);
+		producto2.setNombre("PRODUCTO DE TEST 2");
+		producto2.setDescripcion("DESCRIPCION PRODUCTO DE TEST 2");
+		producto2.setFechaAlta(new Date());
+		producto2.setPrecio(100.0);
+		producto2.setCategoria(CategoriaDTO.COMIDA);
+		producto2.setDescatalogado(true);
+		
+		ProductoDTO producto3 = new ProductoDTO();
+		
+		producto3.setCodigo(300000L);
+		producto3.setNombre("PRODUCTO DE TEST 3");
+		producto3.setDescripcion("DESCRIPCION PRODUCTO DE TEST 3");
+		producto3.setFechaAlta(new Date());
+		producto3.setPrecio(100.0);
+		producto3.setCategoria(CategoriaDTO.COMIDA);
+		producto3.setDescatalogado(true);
+		
+		
+		// Programamos nuestro objeto mock
 		
 		Mockito.when(productoRepository.getOne(100000L))
-		       .thenReturn(producto);
+		       .thenReturn(producto1);
 		
+		Mockito.when(productoRepository.findAll())
+				.thenReturn(Arrays.asList(producto1, producto2, producto3));
+		
+	
 	}
 	
 	@Test
@@ -83,5 +110,18 @@ public class ProductoServicesTest {
 		assertThat(encontrado.getNombre()).isEqualTo(nombre);
 		assertThat(encontrado.getDescripcion()).isEqualTo("DESCRIPCION PRODUCTO DE TEST");
 	}
+	
+	@Test
+	public void whenGetAll() throws Exception {
+		List<Producto> productos = this.productoServices.getAll();
+		assertThat(productos.size()).isEqualTo(3);
+	}
+	
+	@Test
+	public void whenCreate() throws Exception {
+		// TODO! ¿Cómo se prueba?
+	}
+	
+	
 	
 }
